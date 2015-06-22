@@ -37,10 +37,6 @@ public:
 
     //! updates the manager
     void update();
-    
-    //! send position
-    void sendPosition(const ofPoint& pos);
-    
 
 private:
     

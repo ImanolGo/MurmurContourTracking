@@ -93,17 +93,6 @@ void OscManager::setupText()
 }
 
 
-void OscManager::sendPosition(const ofPoint& pos)
-{
-    ofxOscMessage m;
-    m.setAddress("/MurmurFloorTracking/position");
-    m.addFloatArg(pos.x);
-    m.addFloatArg(pos.y);
-    m_oscSender.sendMessage(m);
-    m_latestOscMessage = m;
-    this->updateSendText();
-}
-
 void OscManager::update()
 {
     // check for waiting messages
@@ -115,45 +104,42 @@ void OscManager::update()
         m_latestOscMessage = m;
         this->updateReceiveText();
         
-        if(m.getAddress() == "/MurmurFloorTracking/TrackingPos"){
-            ofVec2f pos;
-            pos.x = m.getArgAsFloat(0);
-            pos.y = m.getArgAsFloat(1);
-            AppManager::getInstance().getTrackingManager().onTrackingPosChange(pos);
-
+        if(m.getAddress() == "/MurmurContourTracking/NearClipping"){
+            int nearClipping = m.getArgAsInt32(0);
+            AppManager::getInstance().getGuiManager().setGuiNearClipping(nearClipping);
         }
         
-        else if(m.getAddress() == "/MurmurFloorTracking/Brightness"){
-            int brightness = m.getArgAsInt32(0);
-            AppManager::getInstance().getGuiManager().setGuiBrightness(brightness);
+        else if(m.getAddress() == "/MurmurContourTracking/FarClipping"){
+            int farClipping = m.getArgAsInt32(0);
+            AppManager::getInstance().getGuiManager().setGuiFarClipping(farClipping);
         }
         
-        else if(m.getAddress() == "/MurmurFloorTracking/Threslhold"){
+        else if(m.getAddress() == "/MurmurContourTracking/Threslhold"){
             int threshold = m.getArgAsInt32(0);
             AppManager::getInstance().getGuiManager().setGuiThreshold(threshold);
         }
         
-        else if(m.getAddress() == "/MurmurFloorTracking/BackgroundThreslhold"){
+        else if(m.getAddress() == "/MurmurContourTracking/BackgroundThreslhold"){
             int backgroundThreslhold = m.getArgAsInt32(0);
             AppManager::getInstance().getGuiManager().setGuiBackgroundThreshold(backgroundThreslhold);
         }
         
-        else if(m.getAddress() == "/MurmurFloorTracking/MinArea"){
+        else if(m.getAddress() == "/MurmurContourTracking/MinArea"){
             int minArea = m.getArgAsInt32(0);
             AppManager::getInstance().getGuiManager().setGuiMinArea(minArea);
         }
         
-        else if(m.getAddress() == "/MurmurFloorTracking/MaxArea"){
+        else if(m.getAddress() == "/MurmurContourTracking/MaxArea"){
             int maxArea = m.getArgAsInt32(0);
             AppManager::getInstance().getGuiManager().setGuiMaxArea(maxArea);
         }
         
-        else if(m.getAddress() == "/MurmurFloorTracking/BackgroundSubstraction"){
+        else if(m.getAddress() == "/MurmurContourTracking/BackgroundSubstraction"){
             bool backgroundSubstraction = ( m.getArgAsInt32(0) != 0);
             AppManager::getInstance().getGuiManager().setBackgroundSubstraction(backgroundSubstraction);
         }
         
-        else if(m.getAddress() == "/MurmurFloorTracking/ResetBackground"){
+        else if(m.getAddress() == "/MurmurContourTracking/ResetBackground"){
             AppManager::getInstance().getTrackingManager().onResetBackground();
         }
         

@@ -58,9 +58,13 @@ void GuiManager::setupCameraGui()
     TrackingManager* trackingManager = &AppManager::getInstance().getTrackingManager();
     m_gui.add(m_guiFPS.set("FPS", 0, 0, 60));
    
-    m_brightness.set("Brightness", 40, 0, 255);
-    m_brightness.addListener(trackingManager, &TrackingManager::onBrightnessChange);
-    m_gui.add(m_brightness);
+    m_nearClipping.set("NearClipping", 0, 0, 12000);
+    m_nearClipping.addListener(trackingManager, &TrackingManager::onNearClippingChange);
+    m_gui.add(m_nearClipping);
+    
+    m_farClipping.set("FarClipping", 5000, 0, 12000);
+    m_farClipping.addListener(trackingManager, &TrackingManager::onFarClippingChange);
+    m_gui.add(m_farClipping);
     
 }
 
@@ -83,10 +87,6 @@ void GuiManager::setupTrackingGui()
     m_maxArea.set("MaxArea", 100, 100, 500);
     m_maxArea.addListener(trackingManager, &TrackingManager::onMaxAreaChange);
     m_gui.add(m_maxArea);
-    
-    m_trackingPos.set("TrackingPos", ofVec2f(0,0),  ofVec2f(0,0),  ofVec2f(1.0,1.0));
-    m_trackingPos.addListener(trackingManager, &TrackingManager::onTrackingPosChange);
-    m_gui.add(m_trackingPos);
     
     m_backgroundSubstraction.set("BackgroundSubstraction", true);
     m_backgroundSubstraction.addListener(trackingManager, &TrackingManager::onBackgroundSubstractionChange);

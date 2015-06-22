@@ -15,28 +15,37 @@ using namespace cv;
 
 #define STRINGIFY(x) #x
 
-const string TrackingManager::m_irFragmentShaderString =
+
+const string TrackingManager::m_depthFragmentShader =
 STRINGIFY(
-    uniform sampler2DRect tex;
-    uniform float brightness;
-    void main()
-    {
-        vec4 col = texture2DRect(tex, gl_TexCoord[0].xy);
-        //brightness = (brightness/255.0)*(6500 - 80000) + 80000;
-        float value = col.r / brightness;
-        //float value = col.r / 6535.0;
-        gl_FragColor = vec4(vec3(value), 1.0);
-    }
+          uniform sampler2DRect tex;
+          uniform float nearClipping;
+          uniform float farClipping;
+          void main()
+          {
+              vec4 col = texture2DRect(tex, gl_TexCoord[0].xy);
+              float value = col.r;
+              float low1 = nearClipping;
+              float high1 = farClipping;
+              float low2 = 1.0;
+              float high2 = 0.0;
+              float d = clamp(low2 + (value - low1) * (high2 - low2) / (high1 - low1), 0.0, 1.0);
+              if (d == 1.0) {
+                  d = 0.0;
+              }
+              gl_FragColor = vec4(vec3(d), 1.0);
+          }
 );
 
-const int TrackingManager::IR_CAMERA_WIDTH = 512;
-const int TrackingManager::IR_CAMERA_HEIGHT = 424;
+const int TrackingManager::DEPTH_CAMERA_WIDTH = 512;
+const int TrackingManager::DEPTH_CAMERA_HEIGHT = 424;
 const float TrackingManager::SCALE = 1.35;
 const int TrackingManager::TRACKING_PERSISTANCY = 5*30;
 const int TrackingManager::LEARNING_TIME = 10*30;
 
 
-TrackingManager::TrackingManager(): Manager(), m_threshold(80), m_contourMinArea(50), m_contourMaxArea(1000), m_thresholdBackground(10), m_substractBackground(true)
+TrackingManager::TrackingManager(): Manager(), m_threshold(80), m_contourMinArea(50), m_contourMaxArea(1000), m_thresholdBackground(10), m_substractBackground(true),
+m_depthNearClipping(0.0), m_depthFarClipping(5000.0)
 {
     //Intentionally left empty
 }
@@ -78,13 +87,13 @@ void TrackingManager::setupContourTracking()
 
 void TrackingManager::setupKinectCamera()
 {
-    m_irShader.setupShaderFromSource(GL_FRAGMENT_SHADER, m_irFragmentShaderString);
-    m_irShader.linkProgram();
+    m_depthShader.setupShaderFromSource(GL_FRAGMENT_SHADER, m_depthFragmentShader);
+    m_depthShader.linkProgram();
     
-    m_irFbo.allocate(IR_CAMERA_WIDTH, IR_CAMERA_HEIGHT, GL_RGB);
-    m_irFbo.begin();
+    m_depthFbo.allocate(DEPTH_CAMERA_WIDTH, DEPTH_CAMERA_HEIGHT, GL_RGB);
+    m_depthFbo.begin();
         ofClear(0,0,0,0);
-    m_irFbo.end();
+    m_depthFbo.end();
     
     m_kinect.open(true, true, 0, 2);
     m_kinect.start();
@@ -108,15 +117,16 @@ void TrackingManager::updateKinectCamera()
 {
     m_kinect.update();
     if (m_kinect.isFrameNew()) {
-        m_irTexture.loadData(m_kinect.getIrPixelsRef());
+        m_depthTexture.loadData(m_kinect.getDepthPixelsRef());
     
-        if (m_irTexture.isAllocated()) {
-            m_irFbo.begin();
-            m_irShader.begin();
-            m_irShader.setUniform1f("brightness", m_irBrightness);
-            m_irTexture.draw(0, 0, IR_CAMERA_WIDTH, IR_CAMERA_HEIGHT);
-            m_irShader.end();
-            m_irFbo.end();
+        if (m_depthTexture.isAllocated()) {
+            m_depthFbo.begin();
+            m_depthShader.begin();
+            m_depthShader.setUniform1f("nearClipping", m_depthNearClipping);
+            m_depthShader.setUniform1f("farClipping", m_depthFarClipping);
+            m_depthTexture.draw(0, 0, DEPTH_CAMERA_WIDTH, DEPTH_CAMERA_HEIGHT);
+            m_depthShader.end();
+            m_depthFbo.end();
         }
     }
 }
@@ -126,7 +136,7 @@ void TrackingManager::updateContourTracking()
     if (m_kinect.isFrameNew()) {
         ofImage image;
         ofPixels pixels;
-        m_irFbo.readToPixels(pixels);
+        m_depthFbo.readToPixels(pixels);
         image.setFromPixels(pixels);
         
         if(m_substractBackground){
@@ -138,28 +148,8 @@ void TrackingManager::updateContourTracking()
         else{
             m_contourFinder.findContours(image);
         }
-        
-        this->updateTrackingPoint();
     }
 }
-
-void TrackingManager::updateTrackingPoint()
-{
-    double contourArea = 0;
-    for(int i = 0; i < m_contourFinder.size(); i++) {
-        
-        if(contourArea < m_contourFinder.getContourArea(i)){
-            contourArea =  m_contourFinder.getContourArea(i);
-            m_trackingPosition = toOf(m_contourFinder.getCenter(i));
-            m_trackingPosition.x/=IR_CAMERA_WIDTH;
-            m_trackingPosition.y/=IR_CAMERA_HEIGHT;
-        }
-    }
-    
-    AppManager::getInstance().getGuiManager().setGuiTrackingPos(m_trackingPosition);
-    //AppManager::getInstance().getOscManager().sendPosition(m_trackingPosition);
-}
-
 
 
 void TrackingManager::draw()
@@ -176,7 +166,6 @@ void TrackingManager::drawTracking()
         ofScale(SCALE,SCALE);
         this->drawIrCamera();
         this->drawContourTracking();
-        this->drawTrackingPosition();
     ofPopMatrix();
 }
 
@@ -185,8 +174,8 @@ void TrackingManager::drawIrCamera()
 {
     ofPushStyle();
         ofSetColor(255);
-        ofRect(0, 0, IR_CAMERA_WIDTH + LayoutManager::PADDING*2, IR_CAMERA_HEIGHT + LayoutManager::PADDING*2);
-        m_irFbo.draw(LayoutManager::PADDING,LayoutManager::PADDING);
+        ofRect(0, 0, DEPTH_CAMERA_WIDTH + LayoutManager::PADDING*2, DEPTH_CAMERA_HEIGHT + LayoutManager::PADDING*2);
+        m_depthFbo.draw(LayoutManager::PADDING,LayoutManager::PADDING);
     ofPopStyle();
 }
 
@@ -195,27 +184,12 @@ void TrackingManager::drawContourTracking()
 {
     ofPushMatrix();
         ofTranslate( LayoutManager::PADDING , LayoutManager::PADDING);
-        m_contourFinder.draw();
+        for(int i = 0; i < m_contourFinder.size(); i++) {
+            m_contourFinder.getPolyline(i).draw();
+        }
     ofPopMatrix();
 }
 
-
-void TrackingManager::drawTrackingPosition()
-{
-    float x = m_trackingPosition.x*IR_CAMERA_WIDTH + LayoutManager::PADDING;
-    float y = m_trackingPosition.y*IR_CAMERA_HEIGHT + LayoutManager::PADDING;
-    float radius = 8;
-    
-    ofPushMatrix();
-    ofPushStyle();
-        ofSetColor(255,255,0);
-        ofNoFill();
-        ofCircle(x, y, radius);
-        ofFill();
-        ofCircle(x, y, radius/8);
-    ofPopStyle();
-    ofPopMatrix();
-}
 
 //--------------------------------------------------------------
 
@@ -224,10 +198,12 @@ void TrackingManager::onResetBackground(){
 }
 
 
-void TrackingManager::onBrightnessChange(int & value){
-    m_irBrightness = value;
-    m_irBrightness = ofMap(value, 0, 255, 50000, 1000, true);
-    //ofLogNotice() <<"TrackingManager::brightness << " << m_irBrightness ;
+void TrackingManager::onNearClippingChange(int & value){
+    m_depthNearClipping = ofClamp(value,0,12000);
+}
+
+void TrackingManager::onFarClippingChange(int & value){
+    m_depthFarClipping = ofClamp(value,m_depthNearClipping,12000);
 }
 
 void TrackingManager::onThresholdChange(int & value){
@@ -256,21 +232,16 @@ void TrackingManager::onBackgroundSubstractionChange(bool & value)
     m_substractBackground = value;
 }
 
-void TrackingManager::onTrackingPosChange(ofVec2f & value)
-{
-    m_trackingPosition = value;
-    AppManager::getInstance().getOscManager().sendPosition(m_trackingPosition);
-}
 
 
 int TrackingManager::getHeight() const
 {
-    return (IR_CAMERA_HEIGHT + LayoutManager::PADDING*2)*SCALE;
+    return (DEPTH_CAMERA_HEIGHT + LayoutManager::PADDING*2)*SCALE;
 }
 
 int TrackingManager::getWidth() const
 {
-    return (IR_CAMERA_HEIGHT + LayoutManager::PADDING*2)*SCALE;
+    return (DEPTH_CAMERA_HEIGHT + LayoutManager::PADDING*2)*SCALE;
 }
 
 ofVec2f TrackingManager::getPosition() const

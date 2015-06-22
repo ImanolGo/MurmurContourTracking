@@ -50,9 +50,9 @@ public:
     
     int getHeight()  {return m_gui.getHeight();}
     
-    void setGuiTrackingPos(const ofVec2f& pos) { m_trackingPos = pos; }
+    void setGuiNearClipping(int value) {m_nearClipping = value;}
     
-    void setGuiBrightness(int value) {m_brightness = value;}
+    void setGuiFarClipping(int value) {m_farClipping = value;}
     
     void setGuiThreshold(int value) {m_threshold = value;}
     
@@ -81,8 +81,8 @@ private:
     bool        m_showGui;  //It defines the whether the gui should be shown or not
     
     ofParameter<float>	 m_guiFPS;
-    ofParameter<ofVec2f> m_trackingPos;
-    ofParameter<int>	 m_brightness;
+    ofParameter<int>	 m_nearClipping;
+    ofParameter<int>	 m_farClipping;
     ofParameter<int>	 m_threshold;
     ofParameter<int>	 m_backgroundThreshold;
     ofParameter<int>	 m_minArea;
