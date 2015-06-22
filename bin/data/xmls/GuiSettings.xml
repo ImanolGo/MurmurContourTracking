@@ -1,12 +1,11 @@
-<GuiSettings>
-	<FPS>59.7319</FPS>
-	<Brightness>242</Brightness>
-	<Threshold>40</Threshold>
-	<BackgroundThreshold>24</BackgroundThreshold>
-	<MinArea>23</MinArea>
-	<MaxArea>296</MaxArea>
-	<TrackingPosX>0</TrackingPosX>
-	<TrackingPosY>0</TrackingPosY>
+<MurmurContourTracking>
+	<FPS>58.3893</FPS>
+	<Brightness>247</Brightness>
+	<Threshold>131</Threshold>
+	<BackgroundThreshold>21</BackgroundThreshold>
+	<MinArea>12</MinArea>
+	<MaxArea>362</MaxArea>
+	<TrackingPos>0.818359, 0.370283</TrackingPos>
 	<BackgroundSubstraction>1</BackgroundSubstraction>
-<GuiSettings/>
-</GuiSettings>
+<MurmurContourTracking/>
+</MurmurContourTracking>

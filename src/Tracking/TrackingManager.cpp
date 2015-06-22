@@ -31,6 +31,7 @@ STRINGIFY(
 
 const int TrackingManager::IR_CAMERA_WIDTH = 512;
 const int TrackingManager::IR_CAMERA_HEIGHT = 424;
+const float TrackingManager::SCALE = 1.35;
 const int TrackingManager::TRACKING_PERSISTANCY = 5*30;
 const int TrackingManager::LEARNING_TIME = 10*30;
 
@@ -155,28 +156,27 @@ void TrackingManager::updateTrackingPoint()
         }
     }
     
-    AppManager::getInstance().getOscManager().sendPosition(m_trackingPosition);
+    AppManager::getInstance().getGuiManager().setGuiTrackingPos(m_trackingPosition);
+    //AppManager::getInstance().getOscManager().sendPosition(m_trackingPosition);
 }
 
 
 
 void TrackingManager::draw()
 {
-    this->drawCamera();
     this->drawTracking();
 }
 
 
-void TrackingManager::drawCamera()
+void TrackingManager::drawTracking()
 {
-    int guiWidth = AppManager::getInstance().getGuiManager().getWidth();
-    float y = LayoutManager::MARGIN;
-    float x = guiWidth + 2*LayoutManager::MARGIN;
-    
+    ofVec2f pos = this->getPosition();
     ofPushMatrix();
-        ofTranslate( x , y );
+        ofTranslate( pos.x , pos.y );
+        ofScale(SCALE,SCALE);
         this->drawIrCamera();
         this->drawContourTracking();
+        this->drawTrackingPosition();
     ofPopMatrix();
 }
 
@@ -199,54 +199,24 @@ void TrackingManager::drawContourTracking()
     ofPopMatrix();
 }
 
-void TrackingManager::drawTracking()
+
+void TrackingManager::drawTrackingPosition()
 {
-    int guiWidth = AppManager::getInstance().getGuiManager().getWidth();
-    float y = 2*LayoutManager::MARGIN + IR_CAMERA_HEIGHT + LayoutManager::PADDING*2;
-    float x = guiWidth + 2*LayoutManager::MARGIN;
+    float x = m_trackingPosition.x*IR_CAMERA_WIDTH + LayoutManager::PADDING;
+    float y = m_trackingPosition.y*IR_CAMERA_HEIGHT + LayoutManager::PADDING;
+    float radius = 8;
     
     ofPushMatrix();
     ofPushStyle();
-        ofTranslate( x , y );
-        ofSetColor(255);
-        ofRect(0, 0, IR_CAMERA_WIDTH + LayoutManager::PADDING*2, IR_CAMERA_HEIGHT + LayoutManager::PADDING*2);
-        ofTranslate( LayoutManager::PADDING , LayoutManager::PADDING);
-        ofSetColor(0);
-        ofRect(0, 0, IR_CAMERA_WIDTH, IR_CAMERA_HEIGHT);
-        this->drawTrackingPosition();
-        ofTranslate( LayoutManager::PADDING , 2*LayoutManager::PADDING);
-        this->drawTrackingPosText();
+        ofSetColor(255,255,0);
+        ofNoFill();
+        ofCircle(x, y, radius);
+        ofFill();
+        ofCircle(x, y, radius/8);
     ofPopStyle();
     ofPopMatrix();
 }
 
-void TrackingManager::drawTrackingPosition()
-{
-    float x = m_trackingPosition.x*IR_CAMERA_WIDTH;
-    float y = m_trackingPosition.y*IR_CAMERA_HEIGHT;
-    float radius = 10;
-    
-    ofPushStyle();
-        ofSetColor(255);
-        ofNoFill();
-        ofCircle(x, y, radius);
-        ofFill();
-        ofCircle(x, y, radius/10);
-    ofPopStyle();
-}
-
-void TrackingManager::drawTrackingPosText()
-{
-    
-    ofPushStyle();
-        ofSetColor(255);
-        // display instructions
-        string text = "X = " + ofToString(m_trackingPosition.x) + "\nY = " + ofToString(m_trackingPosition.y);
-        ofDrawBitmapString(text, 0, 0);
-
-    ofPopStyle();
-    
-   }
 //--------------------------------------------------------------
 
 void TrackingManager::onResetBackground(){
@@ -261,22 +231,23 @@ void TrackingManager::onBrightnessChange(int & value){
 }
 
 void TrackingManager::onThresholdChange(int & value){
-    m_threshold = value;
+    m_threshold = ofClamp(value,0,255);
     m_contourFinder.setThreshold(m_threshold);
 }
 
 void TrackingManager::onBackgroundThresholdChange(int & value){
-    m_thresholdBackground= value;
+    m_thresholdBackground = ofClamp(value,0,30);
     m_background.setThresholdValue(m_thresholdBackground);
 }
 
+
 void TrackingManager::onMinAreaChange(int & value){
-    m_contourMinArea = value;
+    m_contourMinArea = ofClamp(value,0,100);
     m_contourFinder.setMinAreaRadius(m_contourMinArea);
 }
 
 void TrackingManager::onMaxAreaChange(int & value){
-    m_contourMaxArea = value;
+    m_contourMaxArea = ofClamp(value,0,500);
     m_contourFinder.setMaxAreaRadius(m_contourMaxArea);
 }
 
@@ -285,21 +256,30 @@ void TrackingManager::onBackgroundSubstractionChange(bool & value)
     m_substractBackground = value;
 }
 
-
-void TrackingManager::onTrackingPosXChange(float & value)
+void TrackingManager::onTrackingPosChange(ofVec2f & value)
 {
-    m_trackingPosition.x = value;
+    m_trackingPosition = value;
     AppManager::getInstance().getOscManager().sendPosition(m_trackingPosition);
 }
 
-void TrackingManager::onTrackingPosYChange(float & value)
+
+int TrackingManager::getHeight() const
 {
-    m_trackingPosition.y = value;
-    AppManager::getInstance().getOscManager().sendPosition(m_trackingPosition);
+    return (IR_CAMERA_HEIGHT + LayoutManager::PADDING*2)*SCALE;
 }
 
-void TrackingManager::setTrackingPos(const ofPoint & pos)
+int TrackingManager::getWidth() const
 {
-    m_trackingPosition = pos;
-    AppManager::getInstance().getOscManager().sendPosition(m_trackingPosition);
+    return (IR_CAMERA_HEIGHT + LayoutManager::PADDING*2)*SCALE;
 }
+
+ofVec2f TrackingManager::getPosition() const
+{
+    ofVec2f pos;
+    pos.y = LayoutManager::MARGIN;
+    pos.x = GuiManager::GUI_WIDTH + 2*LayoutManager::MARGIN;
+    return pos;
+}
+
+
+

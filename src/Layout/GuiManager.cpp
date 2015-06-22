@@ -15,6 +15,8 @@
 #include "GuiManager.h"
 
 const string GuiManager::GUI_SETTINGS_FILE_NAME = "xmls/GuiSettings.xml";
+const string GuiManager::GUI_SETTINGS_NAME = "MurmurContourTracking";
+const int GuiManager::GUI_WIDTH = 250;
 
 
 GuiManager::GuiManager(): Manager(), m_showGui(true)
@@ -39,13 +41,15 @@ void GuiManager::setup()
     
     Manager::setup();
     
-    m_gui.setup("GuiSettings", GUI_SETTINGS_FILE_NAME);
+    m_gui.setDefaultWidth(GUI_WIDTH);
+    m_gui.setup(GUI_SETTINGS_NAME, GUI_SETTINGS_FILE_NAME);
     m_gui.setPosition(LayoutManager::MARGIN, LayoutManager::MARGIN);
     
     this->setupCameraGui();
     this->setupTrackingGui();
-    
     m_gui.loadFromFile(GUI_SETTINGS_FILE_NAME);
+ 
+   
 }
 
 
@@ -53,12 +57,10 @@ void GuiManager::setupCameraGui()
 {
     TrackingManager* trackingManager = &AppManager::getInstance().getTrackingManager();
     m_gui.add(m_guiFPS.set("FPS", 0, 0, 60));
-    
-    ofxIntSlider * brightness = new ofxIntSlider();
-    brightness->setup("Brightness", 40, 0, 255);
-    //brightness->setup("Brightness", 6535.0, 100.0, 80000);
-    brightness->addListener(trackingManager, &TrackingManager::onBrightnessChange);
-    m_gui.add(brightness);
+   
+    m_brightness.set("Brightness", 40, 0, 255);
+    m_brightness.addListener(trackingManager, &TrackingManager::onBrightnessChange);
+    m_gui.add(m_brightness);
     
 }
 
@@ -66,47 +68,35 @@ void GuiManager::setupTrackingGui()
 {
     TrackingManager* trackingManager = &AppManager::getInstance().getTrackingManager();
     
-    ofxIntSlider * threshold = new ofxIntSlider();
-    threshold->setup("Threshold", 40, 0, 255);
-    threshold->addListener(trackingManager, &TrackingManager::onThresholdChange);
-    m_gui.add(threshold);
+    m_threshold.set("Threshold", 40, 0, 255);
+    m_threshold.addListener(trackingManager, &TrackingManager::onThresholdChange);
+    m_gui.add(m_threshold);
     
-    ofxIntSlider * backgroundThreshold = new ofxIntSlider();
-    backgroundThreshold->setup("BackgroundThreshold", 10, 0, 30);
-    backgroundThreshold->addListener(trackingManager, &TrackingManager::onBackgroundThresholdChange);
-    m_gui.add(backgroundThreshold);
+    m_backgroundThreshold.set("BackgroundThreshold", 10, 0, 30);
+    m_backgroundThreshold.addListener(trackingManager, &TrackingManager::onBackgroundThresholdChange);
+    m_gui.add(m_backgroundThreshold);
     
-    ofxIntSlider * minArea = new ofxIntSlider();
-    minArea->setup("MinArea", 20, 0, 100);
-    minArea->addListener(trackingManager, &TrackingManager::onMinAreaChange);
-    m_gui.add(minArea);
+    m_minArea.set("MinArea", 20, 0, 100);
+    m_minArea.addListener(trackingManager, &TrackingManager::onMinAreaChange);
+    m_gui.add(m_minArea);
     
-    ofxIntSlider * maxArea = new ofxIntSlider();
-    maxArea->setup("MaxArea", 100, 100, 500);
-    maxArea->addListener(trackingManager, &TrackingManager::onMaxAreaChange);
-    m_gui.add(maxArea);
+    m_maxArea.set("MaxArea", 100, 100, 500);
+    m_maxArea.addListener(trackingManager, &TrackingManager::onMaxAreaChange);
+    m_gui.add(m_maxArea);
     
+    m_trackingPos.set("TrackingPos", ofVec2f(0,0),  ofVec2f(0,0),  ofVec2f(1.0,1.0));
+    m_trackingPos.addListener(trackingManager, &TrackingManager::onTrackingPosChange);
+    m_gui.add(m_trackingPos);
     
-    ofxFloatSlider * trackingPosX = new ofxFloatSlider();
-    trackingPosX->setup("TrackingPosX", 0.0, 0.0, 1.0);
-    trackingPosX->addListener(trackingManager, &TrackingManager::onTrackingPosXChange);
-    m_gui.add(trackingPosX);
-    
-    ofxFloatSlider * trackingPosY = new ofxFloatSlider();
-    trackingPosY->setup("TrackingPosY", 0.0, 0.0, 1.0);
-    trackingPosY->addListener(trackingManager, &TrackingManager::onTrackingPosYChange);
-    m_gui.add(trackingPosY);
-    
-    ofxToggle * backgroundSubstraction = new ofxToggle();
-    backgroundSubstraction->setup("BackgroundSubstraction", true);
-    backgroundSubstraction->addListener(trackingManager, &TrackingManager::onBackgroundSubstractionChange);
-    m_gui.add(backgroundSubstraction);
+    m_backgroundSubstraction.set("BackgroundSubstraction", true);
+    m_backgroundSubstraction.addListener(trackingManager, &TrackingManager::onBackgroundSubstractionChange);
+    m_gui.add(m_backgroundSubstraction);
     
     ofxButton * resetBackground = new ofxButton();
-    resetBackground->setup("ResetButton");
+    resetBackground->setup("ResetBackground");
     resetBackground->addListener(trackingManager, &TrackingManager::onResetBackground);
     m_gui.add(resetBackground);
-
+    
 }
 
 void GuiManager::draw()
@@ -134,3 +124,4 @@ void GuiManager::toggleGui()
     ofLogNotice() <<"GuiManager::toggleGui -> show GUI "<< m_showGui;
     m_showGui = !m_showGui;
 }
+
