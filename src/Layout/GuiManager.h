@@ -70,6 +70,8 @@ public:
     
     void setBackgroundSubstraction(bool value) {m_backgroundSubstraction = value;}
     
+    void setSendAllContours(bool value) {m_sendAllContours = value;}
+    
 private:
     
     void setupCameraGui();
@@ -101,6 +103,7 @@ private:
     ofParameter<float>   m_smoothingSize;
     ofParameter<float>   m_smoothingShape;
     ofParameter<bool>	 m_backgroundSubstraction;
+    ofParameter<bool>	 m_sendAllContours;
     
 };
 

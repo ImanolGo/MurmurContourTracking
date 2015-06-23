@@ -110,13 +110,18 @@ void GuiManager::setupTrackingGui()
     m_smoothingSize.addListener(trackingManager, &TrackingManager::onSmoothingSizeChange);
     m_parametersTracking.add(m_smoothingSize);
     
-    m_smoothingShape.set("SmoothingShape", 0.0, 0.0, 5.0);
+    m_smoothingShape.set("SmoothingShape", 0.0, 0.0, 1.0);
     m_smoothingShape.addListener(trackingManager, &TrackingManager::onSmoothingShapeChange);
     m_parametersTracking.add(m_smoothingShape);
     
     m_backgroundSubstraction.set("BackgroundSubstraction", true);
     m_backgroundSubstraction.addListener(trackingManager, &TrackingManager::onBackgroundSubstractionChange);
     m_parametersTracking.add(m_backgroundSubstraction);
+    
+    m_sendAllContours.set("SendAllContours", true);
+    m_sendAllContours.addListener(trackingManager, &TrackingManager::onSendAllContoursChange);
+    m_parametersTracking.add(m_sendAllContours);
+    
     m_gui.add(m_parametersTracking);
     
     ofxButton * resetBackground = new ofxButton();

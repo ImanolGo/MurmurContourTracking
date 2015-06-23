@@ -37,6 +37,13 @@ public:
 
     //! updates the manager
     void update();
+    
+    //! send number of contours
+    void sendNumberContours(int num);
+    
+    //! send contour
+    void sendContour(const ofPolyline& contour, int i);
+
 
 private:
     

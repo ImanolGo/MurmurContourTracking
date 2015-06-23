@@ -146,6 +146,33 @@ void OscManager::update()
     }
 }
 
+void OscManager::sendNumberContours(int num)
+{
+    ofxOscMessage m;
+    m.setAddress("/MurmurContourTracking/NumContours");
+    m.addIntArg(num);
+    m_oscSender.sendMessage(m);
+    m_latestOscMessage = m;
+    this->updateSendText();
+}
+
+void OscManager::sendContour(const ofPolyline& contour, int i)
+{
+    string contourAddr = "/MurmurContourTracking/NumContour/" + ofToString(i);
+    ofxOscMessage m;
+    m.setAddress(contourAddr);
+    
+    for (ofPoint blobPoint : contour.getVertices()) {
+        m.addFloatArg(blobPoint.x / TrackingManager::DEPTH_CAMERA_WIDTH);
+        m.addFloatArg(blobPoint.y / TrackingManager::DEPTH_CAMERA_HEIGHT);
+    }
+    
+    m_oscSender.sendMessage(m);
+    m_latestOscMessage = m;
+    //this->updateSendText();
+}
+
+
 
 void OscManager::updateSendText()
 {

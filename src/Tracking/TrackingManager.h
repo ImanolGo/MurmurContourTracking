@@ -25,8 +25,6 @@
 class TrackingManager: public Manager
 {
     
-    static const int DEPTH_CAMERA_WIDTH;
-    static const int DEPTH_CAMERA_HEIGHT;
     static const float SCALE;
     static const int TRACKING_PERSISTANCY;
     static const int LEARNING_TIME;
@@ -51,12 +49,11 @@ public:
     //! Return the tracking visual height
     int getHeight() const;
     
-    //! Return the tracking visual hewidthight
+    //! Return the tracking visual width
     int getWidth() const;
     
     //! Return the tracking visual position
     ofVec2f getPosition() const;
-
     
     //! Near clipping change controlled by GUI
     void onNearClippingChange(int & value);
@@ -79,6 +76,9 @@ public:
     //! Background Subtraction toggle change controlled by GUI
     void onBackgroundSubstractionChange(bool & value);
     
+    //! Send all contours toggle change controlled by GUI
+    void onSendAllContoursChange(bool & value);
+    
     //! Blur Scale change controlled by GUI
     void onBlurScaleChange(float & value);
     
@@ -96,6 +96,11 @@ public:
 
     //! Reset Backround for background substraction
     void onResetBackground();
+    
+public:
+    
+    static const int DEPTH_CAMERA_WIDTH;
+    static const int DEPTH_CAMERA_HEIGHT;
    
 private:
     
@@ -107,7 +112,17 @@ private:
     
     void updateContourTracking();
     
+    void updateTrackedContour();
+    
+    void sendTrackedContour();
+    
+    void sendAllContours();
+    
     void drawTracking();
+    
+    void drawTrackedContour();
+    
+    void drawAllContours();
     
     void drawDepthCamera();
     
@@ -132,6 +147,7 @@ private:
     
     ofxCv::ContourFinder        m_contourFinder;            ///< threshold used for the contour tracking
     ofxCv::RunningBackground    m_background;               ///< used for background substraction
+    ofPolyline                  m_trackedContour;           ///< single contour to be tracked
     int                         m_threshold;                ///< threshold used for the contour tracking
     int                         m_thresholdBackground;      ///< threshold used for the backround substraction
     float                       m_simplifyTolerance;        ///< tolerance for simplifying the contour, removing un-necessary vertices.
@@ -140,6 +156,7 @@ private:
     int                         m_contourMinArea;           ///< contour minimum area
     int                         m_contourMaxArea;           ///< blcontourob's maxmimum area
     bool                        m_substractBackground;      ///< defines whether to extract or not the background
+    bool                        m_sendAllContours;          ///< defines whether to send one or all contours
     
 };
 
