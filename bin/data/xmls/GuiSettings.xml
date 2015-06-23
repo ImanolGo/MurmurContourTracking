@@ -1,16 +1,30 @@
 <MurmurContourTracking>
-	<FPS>44.7876</FPS>
-	<Brightness>241</Brightness>
-	<Threshold>129</Threshold>
-	<BackgroundThreshold>18</BackgroundThreshold>
-	<MinArea>30</MinArea>
-	<MaxArea>408</MaxArea>
-	<TrackingPos>0.818359, 0.370283</TrackingPos>
-	<BackgroundSubstraction>1</BackgroundSubstraction>
+	<FPS>58.1617</FPS>
+	<Camera>
+		<NearClipping>2351</NearClipping>
+		<FarClipping>4163</FarClipping>
+		<BlurScale>0</BlurScale>
+		<BlurRotation>0</BlurRotation>
+	</Camera>
+	<Tracking>
+		<Threshold>81</Threshold>
+		<BackgroundThreshold>10</BackgroundThreshold>
+		<MinArea>21</MinArea>
+		<MaxArea>437</MaxArea>
+		<SimplifyContour>0.587755</SimplifyContour>
+		<BackgroundSubstraction>0</BackgroundSubstraction>
+	<SmoothingSize>1.83673</SmoothingSize>
+		<SmoothingShape>2.4898</SmoothingShape>
+	</Tracking>
 <MurmurContourTracking/>
-<NearClipping>2112</NearClipping>
-	<FarClipping>3792</FarClipping>
-<BlurScale>2</BlurScale>
-	<BlurRotation>-0.326725</BlurRotation>
-<SimplifyContour>0.504</SimplifyContour>
+<NearClipping>0</NearClipping>
+	<FarClipping>5000</FarClipping>
+	<BlurScale>0</BlurScale>
+	<BlurRotation>0</BlurRotation>
+	<Threshold>40</Threshold>
+	<BackgroundThreshold>10</BackgroundThreshold>
+	<MinArea>20</MinArea>
+	<MaxArea>100</MaxArea>
+	<SimplifyContour>0</SimplifyContour>
+	<BackgroundSubstraction>1</BackgroundSubstraction>
 </MurmurContourTracking>

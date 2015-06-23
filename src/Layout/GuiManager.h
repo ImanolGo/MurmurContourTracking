@@ -83,7 +83,9 @@ public:
 private:
     
     // Fluid GUI
-    ofxPanel	m_gui;
+    ofxPanel            m_gui;
+    ofParameterGroup    m_parametersCamera;
+    ofParameterGroup    m_parametersTracking;
     bool        m_showGui;  //It defines the whether the gui should be shown or not
     
     ofParameter<float>	 m_guiFPS;
@@ -96,6 +98,8 @@ private:
     ofParameter<float>	 m_blurScale;
     ofParameter<float>	 m_blurRotation;
     ofParameter<float>   m_simplifyContour;
+    ofParameter<float>   m_smoothingSize;
+    ofParameter<float>   m_smoothingShape;
     ofParameter<bool>	 m_backgroundSubstraction;
     
 };

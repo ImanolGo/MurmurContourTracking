@@ -87,6 +87,12 @@ public:
     
     //! Simplify contour controlled by GUI
     void onSimplifyChange(float & value);
+    
+    //! Smoothing size controlled by GUI
+    void onSmoothingSizeChange(float & value);
+    
+    //! Smoothing shape controlled by GUI
+    void onSmoothingShapeChange(float & value);
 
     //! Reset Backround for background substraction
     void onResetBackground();
@@ -129,6 +135,8 @@ private:
     int                         m_threshold;                ///< threshold used for the contour tracking
     int                         m_thresholdBackground;      ///< threshold used for the backround substraction
     float                       m_simplifyTolerance;        ///< tolerance for simplifying the contour, removing un-necessary vertices.
+    float                       m_smoothingSize;            ///< size of the smoothing window
+    float                       m_smoothingShape;           ///< describes whether to use a triangular window (0) or box window (1) or something in between (0.5)
     int                         m_contourMinArea;           ///< contour minimum area
     int                         m_contourMaxArea;           ///< blcontourob's maxmimum area
     bool                        m_substractBackground;      ///< defines whether to extract or not the background

@@ -45,7 +45,7 @@ const int TrackingManager::LEARNING_TIME = 10*30;
 
 
 TrackingManager::TrackingManager(): Manager(), m_threshold(80), m_contourMinArea(50), m_contourMaxArea(1000), m_thresholdBackground(10), m_substractBackground(true),
-m_depthNearClipping(0.0), m_depthFarClipping(5000.0), m_blurScale(0.0), m_blurRotation(0.0), m_simplifyTolerance(0.0)
+m_depthNearClipping(0.0), m_depthFarClipping(5000.0), m_blurScale(0.0), m_blurRotation(0.0), m_simplifyTolerance(0.0), m_smoothingShape(0.0),m_smoothingSize(0.0)
 {
     //Intentionally left empty
 }
@@ -103,7 +103,7 @@ void TrackingManager::setupKinectCamera()
     m_kinect.start();
     
     float radius = 1; float shape = .2; float passes = 1;
-    m_blur.setup(DEPTH_CAMERA_WIDTH, DEPTH_CAMERA_HEIGHT, radius, shape, passes);
+    //m_blur.setup(DEPTH_CAMERA_WIDTH, DEPTH_CAMERA_HEIGHT, radius, shape, passes);
 
     // Note :
     // Default OpenCL device might not be optimal.
@@ -135,13 +135,13 @@ void TrackingManager::updateKinectCamera()
             m_depthShader.end();
             m_depthFbo.end();
             
-            m_blur.begin();
+           /*m_blur.begin();
                 m_depthFbo.draw(0,0);
             m_blur.end();
             
             m_blurredFbo.begin();
                 m_blur.draw();
-            m_blurredFbo.end();
+            m_blurredFbo.end();*/
         }
     }
     
@@ -154,7 +154,7 @@ void TrackingManager::updateContourTracking()
     if (m_kinect.isFrameNew()) {
         ofImage image;
         ofPixels pixels;
-        m_blurredFbo.readToPixels(pixels);
+        m_depthFbo.readToPixels(pixels);
         image.setFromPixels(pixels);
         
         if(m_substractBackground){
@@ -193,7 +193,7 @@ void TrackingManager::drawDepthCamera()
     ofPushStyle();
         ofSetColor(255);
         ofRect(0, 0, DEPTH_CAMERA_WIDTH + LayoutManager::PADDING*2, DEPTH_CAMERA_HEIGHT + LayoutManager::PADDING*2);
-        m_blurredFbo.draw(LayoutManager::PADDING,LayoutManager::PADDING);
+        m_depthFbo.draw(LayoutManager::PADDING,LayoutManager::PADDING);
     ofPopStyle();
 }
 
@@ -203,8 +203,12 @@ void TrackingManager::drawContourTracking()
     ofPushMatrix();
         ofTranslate( LayoutManager::PADDING , LayoutManager::PADDING);
         for(int i = 0; i < m_contourFinder.size(); i++) {
-            m_contourFinder.getPolyline(i).simplify(m_simplifyTolerance);
-            m_contourFinder.getPolyline(i).draw();
+            ofPolyline p = m_contourFinder.getPolyline(i).getSmoothed(m_smoothingSize, m_smoothingShape);
+            p.simplify(m_simplifyTolerance);
+            p.draw();
+            //ofPolyline p = m_contourFinder.getPolyline(i).getSmoothed(2, 0.5);
+            //p.draw();
+            
         }
     ofPopMatrix();
 }
@@ -268,7 +272,15 @@ void TrackingManager::onSimplifyChange(float & value)
     m_simplifyTolerance = ofClamp(value,0.0,2.0);
 }
 
+void TrackingManager::onSmoothingSizeChange(float & value)
+{
+    m_smoothingSize = ofClamp(value,0.0,5.0);
+}
 
+void TrackingManager::onSmoothingShapeChange(float & value)
+{
+    m_smoothingShape = ofClamp(value,0.0,1.0);
+}
 
 int TrackingManager::getHeight() const
 {
