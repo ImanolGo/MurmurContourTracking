@@ -139,10 +139,49 @@ void OscManager::update()
             AppManager::getInstance().getGuiManager().setBackgroundSubstraction(backgroundSubstraction);
         }
         
+        else if(m.getAddress() == "/MurmurContourTracking/SendAllContours"){
+            bool value = ( m.getArgAsInt32(0) != 0);
+            AppManager::getInstance().getGuiManager().setSendAllContours(value);
+        }
+        
         else if(m.getAddress() == "/MurmurContourTracking/ResetBackground"){
             AppManager::getInstance().getTrackingManager().onResetBackground();
         }
         
+        else if(m.getAddress() == "/MurmurContourTracking/NearClipping"){
+            int value = m.getArgAsInt32(0);
+            AppManager::getInstance().getGuiManager().setGuiNearClipping(value);
+        }
+        
+        else if(m.getAddress() == "/MurmurContourTracking/FarClipping"){
+            int value = m.getArgAsInt32(0);
+            AppManager::getInstance().getGuiManager().setGuiFarClipping(value);
+        }
+        
+        else if(m.getAddress() == "/MurmurContourTracking/BlurScale"){
+            float value = m.getArgAsFloat(0);
+            AppManager::getInstance().getGuiManager().setGuiBlurScale(value);
+        }
+        
+        else if(m.getAddress() == "/MurmurContourTracking/BlurRotation"){
+            float value = m.getArgAsFloat(0);
+            AppManager::getInstance().getGuiManager().setGuiBlurRotation(value);
+        }
+        
+        else if(m.getAddress() == "/MurmurContourTracking/SimplifyContour"){
+            float value = m.getArgAsFloat(0);
+            AppManager::getInstance().getGuiManager().setGuiSimplifyContour(value);
+        }
+        
+        else if(m.getAddress() == "/MurmurContourTracking/SmoothingSize"){
+            float value = m.getArgAsFloat(0);
+            AppManager::getInstance().getGuiManager().setGuiSmoothingSize(value);
+        }
+        
+        else if(m.getAddress() == "/MurmurContourTracking/SmoothingShape"){
+            float value = m.getArgAsFloat(0);
+            AppManager::getInstance().getGuiManager().setGuiSmoothingShape(value);
+        }
     }
 }
 

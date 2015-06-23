@@ -182,6 +182,7 @@ void TrackingManager::updateContourTracking()
 void TrackingManager::updateTrackedContour()
 {
     double contourArea = 0;
+    m_trackedContour.clear();
     for(int i = 0; i < m_contourFinder.size(); i++) {
         
         if(contourArea < m_contourFinder.getContourArea(i)){

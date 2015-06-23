@@ -58,6 +58,10 @@ public:
     
     void setGuiBlurRotation(float value) {m_blurRotation = value;}
     
+    void setGuiSmoothingSize(float value) {m_smoothingSize = value;}
+    
+    void setGuiSmoothingShape(float value) {m_smoothingShape = value;}
+    
     void setGuiThreshold(int value) {m_threshold = value;}
     
     void setGuiBackgroundThreshold(int value) {m_backgroundThreshold = value;}
