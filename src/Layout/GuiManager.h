@@ -54,6 +54,10 @@ public:
     
     void setGuiFarClipping(int value) {m_farClipping = value;}
     
+    void setGuiBlurScale(float value) {m_blurScale = value;}
+    
+    void setGuiBlurRotation(float value) {m_blurRotation = value;}
+    
     void setGuiThreshold(int value) {m_threshold = value;}
     
     void setGuiBackgroundThreshold(int value) {m_backgroundThreshold = value;}
@@ -61,6 +65,8 @@ public:
     void setGuiMinArea(int value) {m_minArea = value;}
     
     void setGuiMaxArea(int value) {m_maxArea = value;}
+    
+    void setGuiSimplifyContour(float value) {m_simplifyContour = value;}
     
     void setBackgroundSubstraction(bool value) {m_backgroundSubstraction = value;}
     
@@ -87,6 +93,9 @@ private:
     ofParameter<int>	 m_backgroundThreshold;
     ofParameter<int>	 m_minArea;
     ofParameter<int>	 m_maxArea;
+    ofParameter<float>	 m_blurScale;
+    ofParameter<float>	 m_blurRotation;
+    ofParameter<float>   m_simplifyContour;
     ofParameter<bool>	 m_backgroundSubstraction;
     
 };

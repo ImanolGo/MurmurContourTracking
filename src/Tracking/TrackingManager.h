@@ -12,6 +12,7 @@
 
 #include "ofxMultiKinectV2.h"
 #include "ofxCv.h"
+#include "ofxBlur.h"
 
 
 //========================== class TrackingManager ==============================
@@ -75,9 +76,18 @@ public:
     //! Maximum area change controlled by GUI
     void onMaxAreaChange(int & value);
     
-    //! Background Subtraction togle change controlled by GUI
+    //! Background Subtraction toggle change controlled by GUI
     void onBackgroundSubstractionChange(bool & value);
     
+    //! Blur Scale change controlled by GUI
+    void onBlurScaleChange(float & value);
+    
+    //! Blur Rotation change controlled by GUI
+    void onBlurRotationChange(float & value);
+    
+    //! Simplify contour controlled by GUI
+    void onSimplifyChange(float & value);
+
     //! Reset Backround for background substraction
     void onResetBackground();
    
@@ -93,7 +103,7 @@ private:
     
     void drawTracking();
     
-    void drawIrCamera();
+    void drawDepthCamera();
     
     void drawContourTracking();
     
@@ -106,13 +116,19 @@ private:
     ofxMultiKinectV2        m_kinect;                      ///< Mircrosoft Kinect v2 class
     ofTexture               m_depthTexture;                ///< The texture holding every new depth captured frame
     ofFbo                   m_depthFbo;                    ///< The fbo holding the depth frame after applying shader
+    ofFbo                   m_blurredFbo;                  ///< The fbo holding the depth after being blurred
     int                     m_depthNearClipping;           ///< Near cliping of the depth camera (in mm)
     int                     m_depthFarClipping;            ///< Far cliping of the depth camera (in mm)
+    
+    ofxBlur                 m_blur;                        ///< Blur filter to reduce pixel noise
+    float                   m_blurScale;                   ///< Scale corresponds to how much you "stretch" the blur kernel
+    float                   m_blurRotation;                ///< Rotation corresponds to the two directions the blur
     
     ofxCv::ContourFinder        m_contourFinder;            ///< threshold used for the contour tracking
     ofxCv::RunningBackground    m_background;               ///< used for background substraction
     int                         m_threshold;                ///< threshold used for the contour tracking
     int                         m_thresholdBackground;      ///< threshold used for the backround substraction
+    float                       m_simplifyTolerance;        ///< tolerance for simplifying the contour, removing un-necessary vertices.
     int                         m_contourMinArea;           ///< contour minimum area
     int                         m_contourMaxArea;           ///< blcontourob's maxmimum area
     bool                        m_substractBackground;      ///< defines whether to extract or not the background

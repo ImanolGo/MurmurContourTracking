@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		031DA2828F1FE40403DB8163 /* timer_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97AAFE9943FDA2A587C2FEA /* timer_util.cpp */; };
 		0466B9E6A55078A9F39B1B4B /* svgtiny_gradient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD4F639B12AA5C1013177E49 /* svgtiny_gradient.cpp */; };
+		08DD17471B38AEA10028E472 /* readme.md in Sources */ = {isa = PBXBuildFile; fileRef = 08DD17431B38AEA10028E472 /* readme.md */; };
+		08DD17481B38AEA10028E472 /* ofxBlur.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08DD17451B38AEA10028E472 /* ofxBlur.cpp */; };
 		08E3E4DF1B32DEC2008B8386 /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08E3E4DE1B32DEC2008B8386 /* OpenCL.framework */; };
 		08E3E4E01B32DEDC008B8386 /* libturbojpeg.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = FCCFA3B1943FD5E47DD4EC89 /* libturbojpeg.dylib */; };
 		09ED54706505544D745E4A18 /* stage2.fs in Sources */ = {isa = PBXBuildFile; fileRef = 723FC6A71AF1C02E069EC084 /* stage2.fs */; };
@@ -184,6 +186,9 @@
 		08315CC02640B5462BC6D81D /* darwin_usb.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = darwin_usb.h; path = src/Addons/ofxMultiKinectV2/libs/libusb/include/libusb/os/darwin_usb.h; sourceTree = SOURCE_ROOT; };
 		0893123374DE4A7ADCCF93BB /* windows_common.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = windows_common.h; path = src/Addons/ofxMultiKinectV2/libs/libusb/include/libusb/os/windows_common.h; sourceTree = SOURCE_ROOT; };
 		08C5194B0C92DDA2A7539395 /* core.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = core.h; path = src/Addons/ofxUnicode/libs/utf8cpp/src/utf8_v2_3_1/source/utf8/core.h; sourceTree = SOURCE_ROOT; };
+		08DD17431B38AEA10028E472 /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
+		08DD17451B38AEA10028E472 /* ofxBlur.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBlur.cpp; sourceTree = "<group>"; };
+		08DD17461B38AEA10028E472 /* ofxBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBlur.h; sourceTree = "<group>"; };
 		08E3E4DE1B32DEC2008B8386 /* OpenCL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCL.framework; path = System/Library/Frameworks/OpenCL.framework; sourceTree = SDKROOT; };
 		09C1C26384CCDFBD447585A6 /* random.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = random.h; path = src/Addons/ofxOpenCv/libs/opencv/include/opencv2/flann/random.h; sourceTree = SOURCE_ROOT; };
 		09F8F2DF1D53E65319F30B96 /* LightManager.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = LightManager.cpp; path = src/Engine/3D/LightManager.cpp; sourceTree = SOURCE_ROOT; };
@@ -587,6 +592,25 @@
 				47B837DB6F7B4DA45AC9E559 /* src */,
 			);
 			name = oscpack;
+			sourceTree = "<group>";
+		};
+		08DD17411B38AEA10028E472 /* ofxBlur */ = {
+			isa = PBXGroup;
+			children = (
+				08DD17431B38AEA10028E472 /* readme.md */,
+				08DD17441B38AEA10028E472 /* src */,
+			);
+			name = ofxBlur;
+			path = Addons/ofxBlur;
+			sourceTree = "<group>";
+		};
+		08DD17441B38AEA10028E472 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				08DD17451B38AEA10028E472 /* ofxBlur.cpp */,
+				08DD17461B38AEA10028E472 /* ofxBlur.h */,
+			);
+			path = src;
 			sourceTree = "<group>";
 		};
 		0F51D3E13BA682F737937406 /* win32 */ = {
@@ -1260,6 +1284,7 @@
 		AD642137CCDF61FB3E6CCEA2 /* Addons */ = {
 			isa = PBXGroup;
 			children = (
+				08DD17411B38AEA10028E472 /* ofxBlur */,
 				1EA3722F0348F85E38E37DFE /* ofxCv */,
 				58C8D76E83509B9D19DA59D2 /* ofxGui */,
 				2BE56E9BE247AAC277F02B06 /* ofxMultiKinectV2 */,
@@ -1888,6 +1913,7 @@
 				CA9EDC5C38DFADC62AA6037F /* event_loop.cpp in Sources */,
 				EF36DA65EB611A19BA137DA5 /* frame_listener_impl.cpp in Sources */,
 				0EC363316CB8457FF2D3B372 /* libfreenect2.cpp in Sources */,
+				08DD17481B38AEA10028E472 /* ofxBlur.cpp in Sources */,
 				FD21A02E86645F136526DAAC /* opencl_depth_packet_processor.cpp in Sources */,
 				38F64BC1B8D89CB979E8E0F1 /* packet_pipeline.cpp in Sources */,
 				E681E5F9D501D87D7C63B5EC /* resource.cpp in Sources */,
@@ -1900,6 +1926,7 @@
 				5AAB7C22CA6C8D8CD9D28239 /* filter2.fs in Sources */,
 				C9D10D8F941718A09C769D66 /* stage1.fs in Sources */,
 				09ED54706505544D745E4A18 /* stage2.fs in Sources */,
+				08DD17471B38AEA10028E472 /* readme.md in Sources */,
 				031DA2828F1FE40403DB8163 /* timer_util.cpp in Sources */,
 				A0526808C47B324496EAC52E /* tinythread.cpp in Sources */,
 				CED826669F1BD5159A8FE668 /* transfer_pool.cpp in Sources */,
@@ -2197,6 +2224,7 @@
 				GCC_MODEL_TUNING = NONE;
 				HEADER_SEARCH_PATHS = (
 					"$(OF_CORE_HEADERS)",
+					src/Addons/ofxBlur/src,
 					src/Addons/ofxCv,
 					src/Addons/ofxCv/libs/CLD/include/CLD,
 					src/Addons/ofxCv/libs/CLD/src,
@@ -2362,6 +2390,7 @@
 				GCC_MODEL_TUNING = NONE;
 				HEADER_SEARCH_PATHS = (
 					"$(OF_CORE_HEADERS)",
+					src/Addons/ofxBlur/src,
 					src/Addons/ofxCv,
 					src/Addons/ofxCv/libs/CLD/include/CLD,
 					src/Addons/ofxCv/libs/CLD/src,

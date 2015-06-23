@@ -66,6 +66,14 @@ void GuiManager::setupCameraGui()
     m_farClipping.addListener(trackingManager, &TrackingManager::onFarClippingChange);
     m_gui.add(m_farClipping);
     
+    m_blurScale.set("BlurScale", 0.0, 0.0, 2.0);
+    m_blurScale.addListener(trackingManager, &TrackingManager::onBlurScaleChange);
+    m_gui.add(m_blurScale);
+    
+    m_blurRotation.set("BlurRotation", 0.0, -PI, PI);
+    m_blurRotation.addListener(trackingManager, &TrackingManager::onBlurRotationChange);
+    m_gui.add(m_blurRotation);
+
 }
 
 void GuiManager::setupTrackingGui()
@@ -87,6 +95,10 @@ void GuiManager::setupTrackingGui()
     m_maxArea.set("MaxArea", 100, 100, 500);
     m_maxArea.addListener(trackingManager, &TrackingManager::onMaxAreaChange);
     m_gui.add(m_maxArea);
+    
+    m_simplifyContour.set("SimplifyContour", 0.0, 0.0, 2.0);
+    m_simplifyContour.addListener(trackingManager, &TrackingManager::onSimplifyChange);
+    m_gui.add(m_simplifyContour);
     
     m_backgroundSubstraction.set("BackgroundSubstraction", true);
     m_backgroundSubstraction.addListener(trackingManager, &TrackingManager::onBackgroundSubstractionChange);

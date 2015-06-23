@@ -45,7 +45,7 @@ const int TrackingManager::LEARNING_TIME = 10*30;
 
 
 TrackingManager::TrackingManager(): Manager(), m_threshold(80), m_contourMinArea(50), m_contourMaxArea(1000), m_thresholdBackground(10), m_substractBackground(true),
-m_depthNearClipping(0.0), m_depthFarClipping(5000.0)
+m_depthNearClipping(0.0), m_depthFarClipping(5000.0), m_blurScale(0.0), m_blurRotation(0.0), m_simplifyTolerance(0.0)
 {
     //Intentionally left empty
 }
@@ -94,9 +94,16 @@ void TrackingManager::setupKinectCamera()
     m_depthFbo.begin();
         ofClear(0,0,0,0);
     m_depthFbo.end();
+    m_blurredFbo.allocate(DEPTH_CAMERA_WIDTH, DEPTH_CAMERA_HEIGHT, GL_RGB);
+    m_blurredFbo.begin();
+        ofClear(0,0,0,0);
+    m_blurredFbo.end();
     
     m_kinect.open(true, true, 0, 2);
     m_kinect.start();
+    
+    float radius = 1; float shape = .2; float passes = 1;
+    m_blur.setup(DEPTH_CAMERA_WIDTH, DEPTH_CAMERA_HEIGHT, radius, shape, passes);
 
     // Note :
     // Default OpenCL device might not be optimal.
@@ -127,8 +134,19 @@ void TrackingManager::updateKinectCamera()
             m_depthTexture.draw(0, 0, DEPTH_CAMERA_WIDTH, DEPTH_CAMERA_HEIGHT);
             m_depthShader.end();
             m_depthFbo.end();
+            
+            m_blur.begin();
+                m_depthFbo.draw(0,0);
+            m_blur.end();
+            
+            m_blurredFbo.begin();
+                m_blur.draw();
+            m_blurredFbo.end();
         }
     }
+    
+    //m_blur.setScale(ofMap(ofGetMouseX(), 0, ofGetWidth(), 0, 10));
+    //m_blur.setRotation(ofMap(ofGetMouseY(), 0, ofGetHeight(), -PI, PI));
 }
 
 void TrackingManager::updateContourTracking()
@@ -136,7 +154,7 @@ void TrackingManager::updateContourTracking()
     if (m_kinect.isFrameNew()) {
         ofImage image;
         ofPixels pixels;
-        m_depthFbo.readToPixels(pixels);
+        m_blurredFbo.readToPixels(pixels);
         image.setFromPixels(pixels);
         
         if(m_substractBackground){
@@ -164,18 +182,18 @@ void TrackingManager::drawTracking()
     ofPushMatrix();
         ofTranslate( pos.x , pos.y );
         ofScale(SCALE,SCALE);
-        this->drawIrCamera();
+        this->drawDepthCamera();
         this->drawContourTracking();
     ofPopMatrix();
 }
 
 
-void TrackingManager::drawIrCamera()
+void TrackingManager::drawDepthCamera()
 {
     ofPushStyle();
         ofSetColor(255);
         ofRect(0, 0, DEPTH_CAMERA_WIDTH + LayoutManager::PADDING*2, DEPTH_CAMERA_HEIGHT + LayoutManager::PADDING*2);
-        m_depthFbo.draw(LayoutManager::PADDING,LayoutManager::PADDING);
+        m_blurredFbo.draw(LayoutManager::PADDING,LayoutManager::PADDING);
     ofPopStyle();
 }
 
@@ -185,6 +203,7 @@ void TrackingManager::drawContourTracking()
     ofPushMatrix();
         ofTranslate( LayoutManager::PADDING , LayoutManager::PADDING);
         for(int i = 0; i < m_contourFinder.size(); i++) {
+            m_contourFinder.getPolyline(i).simplify(m_simplifyTolerance);
             m_contourFinder.getPolyline(i).draw();
         }
     ofPopMatrix();
@@ -232,6 +251,23 @@ void TrackingManager::onBackgroundSubstractionChange(bool & value)
     m_substractBackground = value;
 }
 
+void TrackingManager::onBlurScaleChange(float & value)
+{
+    m_blurScale = ofClamp(value,0.0,2.0);
+    m_blur.setScale(m_blurScale);
+}
+
+void TrackingManager::onBlurRotationChange(float & value)
+{
+    m_blurRotation = ofClamp(value,-PI,PI);
+    m_blur.setRotation(m_blurRotation);
+}
+
+void TrackingManager::onSimplifyChange(float & value)
+{
+    m_simplifyTolerance = ofClamp(value,0.0,2.0);
+}
+
 
 
 int TrackingManager::getHeight() const
@@ -251,6 +287,7 @@ ofVec2f TrackingManager::getPosition() const
     pos.x = GuiManager::GUI_WIDTH + 2*LayoutManager::MARGIN;
     return pos;
 }
+
 
 
 
