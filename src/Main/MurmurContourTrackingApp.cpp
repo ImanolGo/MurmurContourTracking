@@ -27,7 +27,7 @@ void MurmurContourTrackingApp::draw(){
 
 void MurmurContourTrackingApp::exit()
 {
-    ofLogNotice() <<"TheOthersApp::exit";
+    ofLogNotice() <<"MurmurContourTrackingApp::exit";
 
 }
 
