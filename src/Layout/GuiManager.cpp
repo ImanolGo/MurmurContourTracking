@@ -45,6 +45,7 @@ void GuiManager::setup()
     m_gui.setup(GUI_SETTINGS_NAME, GUI_SETTINGS_FILE_NAME);
     m_gui.setPosition(LayoutManager::MARGIN, LayoutManager::MARGIN);
     m_gui.add(m_guiFPS.set("FPS", 0, 0, 60));
+    ofxGuiSetFont( "fonts/open-sans/OpenSans-Semibold.ttf", 9 );
     
     this->setupCameraGui();
     this->setupTrackingGui();
@@ -156,4 +157,6 @@ void GuiManager::toggleGui()
     ofLogNotice() <<"GuiManager::toggleGui -> show GUI "<< m_showGui;
     m_showGui = !m_showGui;
 }
+
+
 

@@ -207,7 +207,7 @@ void TrackingManager::sendAllContours()
     for(int i = 0; i < m_contourFinder.size(); i++) {
         ofPolyline p = m_contourFinder.getPolyline(i).getSmoothed(m_smoothingSize, m_smoothingShape);
         p.simplify(m_simplifyTolerance);
-        AppManager::getInstance().getOscManager().sendContour(m_contourFinder.getPolyline(i), i);
+        AppManager::getInstance().getOscManager().sendContour(p, i);
     }
 }
 

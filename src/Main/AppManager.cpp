@@ -79,6 +79,11 @@ void AppManager::update()
 void AppManager::draw()
 {
     m_viewManager.draw();
+    
+    if (!m_debugMode) {
+        return;
+    }
+    
     m_trackingManager.draw();
     m_guiManager.draw();
 }
