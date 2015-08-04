@@ -50,6 +50,8 @@ public:
     
     int getHeight()  {return m_gui.getHeight();}
     
+    void setAudioVolume(float& value){m_audioVolume = value;}
+    
     void setGuiNearClipping(int value) {m_nearClipping = value;}
     
     void setGuiFarClipping(int value) {m_farClipping = value;}
@@ -82,6 +84,8 @@ private:
     
     void setupTrackingGui();
     
+    void setupAudioGui();
+    
 public:
     
     static const int GUI_WIDTH;
@@ -92,6 +96,8 @@ private:
     ofxPanel            m_gui;
     ofParameterGroup    m_parametersCamera;
     ofParameterGroup    m_parametersTracking;
+    ofParameterGroup    m_parametersAudio;
+    
     bool        m_showGui;  //It defines the whether the gui should be shown or not
     
     ofParameter<float>	 m_guiFPS;
@@ -108,6 +114,7 @@ private:
     ofParameter<float>   m_smoothingShape;
     ofParameter<bool>	 m_backgroundSubstraction;
     ofParameter<bool>	 m_sendAllContours;
+    ofParameter<float>   m_audioVolume;
     
 };
 

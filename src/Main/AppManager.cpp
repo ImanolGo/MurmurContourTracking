@@ -65,12 +65,14 @@ void AppManager::setupManagers()
     m_oscManager.setup();
     m_trackingManager.setup();
     m_keyboardManager.setup();
+    m_audioManager.setup();
     m_guiManager.setup();
 }
 
 void AppManager::update()
 {
     m_trackingManager.update();
+    m_audioManager.update();
     m_visualEffectsManager.update();
     m_oscManager.update();
 }
@@ -84,6 +86,7 @@ void AppManager::draw()
         return;
     }
     
+    m_audioManager.draw();
     m_trackingManager.draw();
     m_guiManager.draw();
 }

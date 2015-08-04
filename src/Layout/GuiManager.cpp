@@ -49,6 +49,8 @@ void GuiManager::setup()
     
     this->setupCameraGui();
     this->setupTrackingGui();
+    this->setupAudioGui();
+    
     m_gui.loadFromFile(GUI_SETTINGS_FILE_NAME);
  
    
@@ -130,6 +132,19 @@ void GuiManager::setupTrackingGui()
     resetBackground->addListener(trackingManager, &TrackingManager::onResetBackground);
     m_gui.add(resetBackground);
     
+}
+
+
+void GuiManager::setupAudioGui()
+{
+    auto audioManager = &AppManager::getInstance().getAudioManager();
+    m_parametersAudio.setName("Audio");
+    
+    m_audioVolume.set("Volume", 0.5, 0.0, 1.0);
+    m_audioVolume.addListener(audioManager, &AudioManager::onChangeVolumeRange);
+    m_parametersAudio.add(m_audioVolume);
+    
+    m_gui.add(m_parametersAudio);
 }
 
 void GuiManager::draw()

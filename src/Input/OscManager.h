@@ -46,6 +46,9 @@ public:
     
     //! send contour
     void sendContour(const ofPolyline& contour, int i);
+    
+    //! send audio maximum
+    void sendAudioMax(float value);
 
 
 private:

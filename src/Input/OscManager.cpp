@@ -114,6 +114,12 @@ void OscManager::update()
             AppManager::getInstance().getGuiManager().setGuiFarClipping(farClipping);
         }
         
+        else if(m.getAddress() == "/MurmurContourTracking/AudioVolume"){
+            float value = m.getArgAsFloat(0);
+            AppManager::getInstance().getGuiManager().setAudioVolume(value);
+            this->updateReceiveText();
+        }
+        
         else if(m.getAddress() == "/MurmurContourTracking/Threslhold"){
             int threshold = m.getArgAsInt32(0);
             AppManager::getInstance().getGuiManager().setGuiThreshold(threshold);
@@ -211,7 +217,15 @@ void OscManager::sendContour(const ofPolyline& contour, int i)
     //this->updateSendText();
 }
 
-
+void OscManager::sendAudioMax(float value)
+{
+    ofxOscMessage m;
+    m.setAddress("/MurmurRenderer/AudioMax");
+    m.addFloatArg(value);
+    m_oscSender.sendMessage(m);
+    m_latestOscMessage = m;
+    this->updateSendText();
+}
 
 void OscManager::updateSendText()
 {

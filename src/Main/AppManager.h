@@ -21,6 +21,7 @@
 #include "ViewManager.h"
 #include "KeyboardManager.h"
 #include "OscManager.h"
+#include "AudioManager.h"
 
 //========================== class AppManager ==============================
 //============================================================================
@@ -73,6 +74,9 @@ public:
     
     //! Returns the  OSC manager
     OscManager&  getOscManager() { return m_oscManager; }
+    
+    //! Returns the  audio manager
+    AudioManager&  getAudioManager() { return m_audioManager;}
 
     
     //==========================================================================
@@ -116,6 +120,7 @@ private:
     VisualEffectsManager            m_visualEffectsManager;     ///< Manages the visual effects
     OscManager                      m_oscManager;               ///< Manages the OSC messages
     KeyboardManager                 m_keyboardManager;          ///< Manages the keboard input
+    AudioManager                    m_audioManager;             ///< Manages the audio input
 
     bool                            m_debugMode;
 };
