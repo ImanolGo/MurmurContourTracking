@@ -86,8 +86,8 @@ void AppManager::draw()
         return;
     }
     
-    m_audioManager.draw();
     m_trackingManager.draw();
+   // m_audioManager.draw();
     m_guiManager.draw();
 }
 

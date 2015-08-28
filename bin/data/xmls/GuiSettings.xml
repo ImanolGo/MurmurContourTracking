@@ -1,13 +1,13 @@
 <MurmurContourTracking>
-	<FPS>59.9744</FPS>
+	<FPS>59.9664</FPS>
 	<Camera>
-		<NearClipping>0</NearClipping>
-		<FarClipping>5000</FarClipping>
+		<NearClipping>538</NearClipping>
+		<FarClipping>6367</FarClipping>
 		<BlurScale>0</BlurScale>
 		<BlurRotation>-0.474445</BlurRotation>
 	</Camera>
 	<Tracking>
-		<Threshold>69</Threshold>
+		<Threshold>64</Threshold>
 		<BackgroundThreshold>21</BackgroundThreshold>
 		<MinArea>33</MinArea>
 		<MaxArea>410</MaxArea>
@@ -19,6 +19,6 @@
 	</Tracking>
 <MurmurContourTracking/>
 <Audio>
-		<Volume>0.665306</Volume>
+		<Volume>0.865306</Volume>
 	</Audio>
 </MurmurContourTracking>

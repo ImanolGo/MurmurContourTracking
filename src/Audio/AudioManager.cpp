@@ -67,6 +67,6 @@ void AudioManager::onChangeVolume(float& value)
 
 float AudioManager::getMaxSound() 
 {
-    return ofMap(m_fft.getAveragePeak(), 0.0, 0.8, 0.0, 1.0, true);
+    return ofMap(m_fft.getAveragePeak(), 0.0, 0.6, 0.0, 1.0, true);
 }
 

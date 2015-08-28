@@ -474,6 +474,7 @@ void ofxFFTBase::drawThresholdLine(const ofxFFTData & audioData, int w, int h) {
     int bx, by; // border.
     bx = by = renderBorder;
     
+    ofPushStyle();
     ofFill();
     ofSetColor(0);
     ofRect(bx, (1 - audioData.cutThreshold) * h + by - 1, w, 1);
@@ -481,4 +482,5 @@ void ofxFFTBase::drawThresholdLine(const ofxFFTData & audioData, int w, int h) {
     ofRect(bx, (1 - audioData.cutThreshold) * h + by + 0, w, 1);
     ofSetColor(0);
     ofRect(bx, (1 - audioData.cutThreshold) * h + by + 1, w, 1);
+    ofPopStyle();
 }
