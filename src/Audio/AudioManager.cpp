@@ -56,7 +56,7 @@ void AudioManager::update()
 
 void AudioManager::draw()
 {
-    m_fft.draw(310,650);
+    m_fft.draw(1040,370);
 }
 
 void AudioManager::onChangeVolume(float& value)

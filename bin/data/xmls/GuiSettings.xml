@@ -1,5 +1,5 @@
 <MurmurContourTracking>
-	<FPS>29.8017</FPS>
+	<FPS>59.9744</FPS>
 	<Camera>
 		<NearClipping>0</NearClipping>
 		<FarClipping>5000</FarClipping>
@@ -19,6 +19,6 @@
 	</Tracking>
 <MurmurContourTracking/>
 <Audio>
-		<Volume>0.0653061</Volume>
+		<Volume>0.665306</Volume>
 	</Audio>
 </MurmurContourTracking>
