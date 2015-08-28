@@ -38,7 +38,7 @@ public:
     //! updates the manager
     void update();
     
-    //! updates the manager
+    //! draws the manager
     void draw();
     
     //! send number of contours

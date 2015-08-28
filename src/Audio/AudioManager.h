@@ -12,7 +12,7 @@
 #include "ofMain.h"
 #include "Manager.h"
 
-#include "ofxProcessFFT.h"
+#include "ofxFFTLive.h"
 
 //========================== class AudioManager ==============================
 //============================================================================
@@ -44,7 +44,7 @@ public:
     
     float getMaxSound();
     
-    void onChangeVolumeRange(float& value);
+    void onChangeVolume(float& value);
     
 private:
     
@@ -53,8 +53,8 @@ private:
     
 private:
     
-    int         m_volumeRange;
-    ProcessFFT  m_fft;
+    float           m_volume;
+    ofxFFTLive      m_fft;
     
 };
 

@@ -191,6 +191,12 @@ void OscManager::update()
     }
 }
 
+void OscManager::draw()
+{
+    m_sendingInformation->draw();
+    m_receivingInformation->draw();
+}
+
 void OscManager::sendNumberContours(int num)
 {
     ofxOscMessage m;

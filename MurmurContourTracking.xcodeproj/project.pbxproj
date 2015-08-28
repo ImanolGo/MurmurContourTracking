@@ -9,19 +9,14 @@
 /* Begin PBXBuildFile section */
 		031DA2828F1FE40403DB8163 /* timer_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A97AAFE9943FDA2A587C2FEA /* timer_util.cpp */; };
 		0466B9E6A55078A9F39B1B4B /* svgtiny_gradient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD4F639B12AA5C1013177E49 /* svgtiny_gradient.cpp */; };
+		0848D7721B909CCC00672D56 /* fft.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0848D7671B909CCC00672D56 /* fft.cpp */; };
+		0848D7731B909CCC00672D56 /* ofxFFTBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0848D76C1B909CCC00672D56 /* ofxFFTBase.cpp */; };
+		0848D7741B909CCC00672D56 /* ofxFFTFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0848D76E1B909CCC00672D56 /* ofxFFTFile.cpp */; };
+		0848D7751B909CCC00672D56 /* ofxFFTLive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0848D7701B909CCC00672D56 /* ofxFFTLive.cpp */; };
 		08DD17471B38AEA10028E472 /* readme.md in Sources */ = {isa = PBXBuildFile; fileRef = 08DD17431B38AEA10028E472 /* readme.md */; };
 		08DD17481B38AEA10028E472 /* ofxBlur.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08DD17451B38AEA10028E472 /* ofxBlur.cpp */; };
 		08E3E4DF1B32DEC2008B8386 /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08E3E4DE1B32DEC2008B8386 /* OpenCL.framework */; };
 		08E3E4E01B32DEDC008B8386 /* libturbojpeg.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = FCCFA3B1943FD5E47DD4EC89 /* libturbojpeg.dylib */; };
-		08EBB6121B70C624005F510F /* fftw3f.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 08EBB5FB1B70C624005F510F /* fftw3f.a */; };
-		08EBB6131B70C624005F510F /* kiss_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = 08EBB6011B70C624005F510F /* kiss_fft.c */; };
-		08EBB6141B70C624005F510F /* kiss_fftr.c in Sources */ = {isa = PBXBuildFile; fileRef = 08EBB6031B70C624005F510F /* kiss_fftr.c */; };
-		08EBB6151B70C624005F510F /* readme.md in Sources */ = {isa = PBXBuildFile; fileRef = 08EBB6061B70C624005F510F /* readme.md */; };
-		08EBB6161B70C624005F510F /* ofxEasyFft.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08EBB6081B70C624005F510F /* ofxEasyFft.cpp */; };
-		08EBB6171B70C624005F510F /* ofxFft.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08EBB60A1B70C624005F510F /* ofxFft.cpp */; };
-		08EBB6181B70C624005F510F /* ofxFftBasic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08EBB60C1B70C624005F510F /* ofxFftBasic.cpp */; };
-		08EBB6191B70C624005F510F /* ofxFftw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08EBB60E1B70C624005F510F /* ofxFftw.cpp */; };
-		08EBB61A1B70C624005F510F /* ofxProcessFFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08EBB6101B70C624005F510F /* ofxProcessFFT.cpp */; };
 		08EBB61E1B70C683005F510F /* AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08EBB61C1B70C683005F510F /* AudioManager.cpp */; };
 		09ED54706505544D745E4A18 /* stage2.fs in Sources */ = {isa = PBXBuildFile; fileRef = 723FC6A71AF1C02E069EC084 /* stage2.fs */; };
 		0C172F935FC53F927E2A2A06 /* StateMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFD18460E16E3FD4072AD755 /* StateMachine.cpp */; };
@@ -194,36 +189,23 @@
 		067A0CB3F8E32F33532D73DE /* ofxGui.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxGui.h; path = src/Addons/ofxGui/src/ofxGui.h; sourceTree = SOURCE_ROOT; };
 		074978820820325AB8737225 /* README.md */ = {isa = PBXFileReference; explicitFileType = file; fileEncoding = 30; name = README.md; path = src/Addons/ofxUnicode/README.md; sourceTree = SOURCE_ROOT; };
 		08315CC02640B5462BC6D81D /* darwin_usb.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = darwin_usb.h; path = src/Addons/ofxMultiKinectV2/libs/libusb/include/libusb/os/darwin_usb.h; sourceTree = SOURCE_ROOT; };
+		0848D7651B909CCC00672D56 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		0848D7671B909CCC00672D56 /* fft.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fft.cpp; sourceTree = "<group>"; };
+		0848D7681B909CCC00672D56 /* fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fft.h; sourceTree = "<group>"; };
+		0848D7691B909CCC00672D56 /* ofxaddons_thumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ofxaddons_thumbnail.png; sourceTree = "<group>"; };
+		0848D76A1B909CCC00672D56 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		0848D76C1B909CCC00672D56 /* ofxFFTBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFFTBase.cpp; sourceTree = "<group>"; };
+		0848D76D1B909CCC00672D56 /* ofxFFTBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFFTBase.h; sourceTree = "<group>"; };
+		0848D76E1B909CCC00672D56 /* ofxFFTFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFFTFile.cpp; sourceTree = "<group>"; };
+		0848D76F1B909CCC00672D56 /* ofxFFTFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFFTFile.h; sourceTree = "<group>"; };
+		0848D7701B909CCC00672D56 /* ofxFFTLive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFFTLive.cpp; sourceTree = "<group>"; };
+		0848D7711B909CCC00672D56 /* ofxFFTLive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFFTLive.h; sourceTree = "<group>"; };
 		0893123374DE4A7ADCCF93BB /* windows_common.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = windows_common.h; path = src/Addons/ofxMultiKinectV2/libs/libusb/include/libusb/os/windows_common.h; sourceTree = SOURCE_ROOT; };
 		08C5194B0C92DDA2A7539395 /* core.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = core.h; path = src/Addons/ofxUnicode/libs/utf8cpp/src/utf8_v2_3_1/source/utf8/core.h; sourceTree = SOURCE_ROOT; };
 		08DD17431B38AEA10028E472 /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
 		08DD17451B38AEA10028E472 /* ofxBlur.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBlur.cpp; sourceTree = "<group>"; };
 		08DD17461B38AEA10028E472 /* ofxBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBlur.h; sourceTree = "<group>"; };
 		08E3E4DE1B32DEC2008B8386 /* OpenCL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCL.framework; path = System/Library/Frameworks/OpenCL.framework; sourceTree = SDKROOT; };
-		08EBB5F21B70C624005F510F /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		08EBB5F51B70C624005F510F /* .keep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .keep; sourceTree = "<group>"; };
-		08EBB5F71B70C624005F510F /* fftw3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fftw3.h; sourceTree = "<group>"; };
-		08EBB5F91B70C624005F510F /* .keep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .keep; sourceTree = "<group>"; };
-		08EBB5FB1B70C624005F510F /* fftw3f.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = fftw3f.a; sourceTree = "<group>"; };
-		08EBB5FD1B70C624005F510F /* libfftw3f-3.dll */ = {isa = PBXFileReference; lastKnownFileType = file; path = "libfftw3f-3.dll"; sourceTree = "<group>"; };
-		08EBB5FF1B70C624005F510F /* .keep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .keep; sourceTree = "<group>"; };
-		08EBB6001B70C624005F510F /* _kiss_fft_guts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _kiss_fft_guts.h; sourceTree = "<group>"; };
-		08EBB6011B70C624005F510F /* kiss_fft.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kiss_fft.c; sourceTree = "<group>"; };
-		08EBB6021B70C624005F510F /* kiss_fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fft.h; sourceTree = "<group>"; };
-		08EBB6031B70C624005F510F /* kiss_fftr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kiss_fftr.c; sourceTree = "<group>"; };
-		08EBB6041B70C624005F510F /* kiss_fftr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fftr.h; sourceTree = "<group>"; };
-		08EBB6051B70C624005F510F /* ofxaddons_thumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ofxaddons_thumbnail.png; sourceTree = "<group>"; };
-		08EBB6061B70C624005F510F /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
-		08EBB6081B70C624005F510F /* ofxEasyFft.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEasyFft.cpp; sourceTree = "<group>"; };
-		08EBB6091B70C624005F510F /* ofxEasyFft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasyFft.h; sourceTree = "<group>"; };
-		08EBB60A1B70C624005F510F /* ofxFft.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFft.cpp; sourceTree = "<group>"; };
-		08EBB60B1B70C624005F510F /* ofxFft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFft.h; sourceTree = "<group>"; };
-		08EBB60C1B70C624005F510F /* ofxFftBasic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFftBasic.cpp; sourceTree = "<group>"; };
-		08EBB60D1B70C624005F510F /* ofxFftBasic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFftBasic.h; sourceTree = "<group>"; };
-		08EBB60E1B70C624005F510F /* ofxFftw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFftw.cpp; sourceTree = "<group>"; };
-		08EBB60F1B70C624005F510F /* ofxFftw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFftw.h; sourceTree = "<group>"; };
-		08EBB6101B70C624005F510F /* ofxProcessFFT.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxProcessFFT.cpp; sourceTree = "<group>"; };
-		08EBB6111B70C624005F510F /* ofxProcessFFT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxProcessFFT.h; sourceTree = "<group>"; };
 		08EBB61C1B70C683005F510F /* AudioManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioManager.cpp; sourceTree = "<group>"; };
 		08EBB61D1B70C683005F510F /* AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioManager.h; sourceTree = "<group>"; };
 		09C1C26384CCDFBD447585A6 /* random.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = random.h; path = src/Addons/ofxOpenCv/libs/opencv/include/opencv2/flann/random.h; sourceTree = SOURCE_ROOT; };
@@ -594,7 +576,6 @@
 				E45BE9810E8CC7DD009D7055 /* CoreServices.framework in Frameworks */,
 				E45BE9830E8CC7DD009D7055 /* OpenGL.framework in Frameworks */,
 				E45BE9840E8CC7DD009D7055 /* QuickTime.framework in Frameworks */,
-				08EBB6121B70C624005F510F /* fftw3f.a in Frameworks */,
 				E4C2424710CC5A17004149E2 /* AppKit.framework in Frameworks */,
 				E4C2424810CC5A17004149E2 /* Cocoa.framework in Frameworks */,
 				E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */,
@@ -631,6 +612,41 @@
 			name = oscpack;
 			sourceTree = "<group>";
 		};
+		0848D7641B909CCC00672D56 /* ofxFFT */ = {
+			isa = PBXGroup;
+			children = (
+				0848D7651B909CCC00672D56 /* .gitignore */,
+				0848D7661B909CCC00672D56 /* libs */,
+				0848D7691B909CCC00672D56 /* ofxaddons_thumbnail.png */,
+				0848D76A1B909CCC00672D56 /* README */,
+				0848D76B1B909CCC00672D56 /* src */,
+			);
+			name = ofxFFT;
+			path = Addons/ofxFFT;
+			sourceTree = "<group>";
+		};
+		0848D7661B909CCC00672D56 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				0848D7671B909CCC00672D56 /* fft.cpp */,
+				0848D7681B909CCC00672D56 /* fft.h */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		0848D76B1B909CCC00672D56 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				0848D76C1B909CCC00672D56 /* ofxFFTBase.cpp */,
+				0848D76D1B909CCC00672D56 /* ofxFFTBase.h */,
+				0848D76E1B909CCC00672D56 /* ofxFFTFile.cpp */,
+				0848D76F1B909CCC00672D56 /* ofxFFTFile.h */,
+				0848D7701B909CCC00672D56 /* ofxFFTLive.cpp */,
+				0848D7711B909CCC00672D56 /* ofxFFTLive.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		08DD17411B38AEA10028E472 /* ofxBlur */ = {
 			isa = PBXGroup;
 			children = (
@@ -646,102 +662,6 @@
 			children = (
 				08DD17451B38AEA10028E472 /* ofxBlur.cpp */,
 				08DD17461B38AEA10028E472 /* ofxBlur.h */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		08EBB5F11B70C624005F510F /* ofxFft */ = {
-			isa = PBXGroup;
-			children = (
-				08EBB5F21B70C624005F510F /* .gitignore */,
-				08EBB5F31B70C624005F510F /* libs */,
-				08EBB6051B70C624005F510F /* ofxaddons_thumbnail.png */,
-				08EBB6061B70C624005F510F /* readme.md */,
-				08EBB6071B70C624005F510F /* src */,
-			);
-			name = ofxFft;
-			path = ../../MurmurRenderer/src/Addons/ofxFft;
-			sourceTree = "<group>";
-		};
-		08EBB5F31B70C624005F510F /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				08EBB5F41B70C624005F510F /* fftw */,
-				08EBB5FE1B70C624005F510F /* kiss */,
-			);
-			path = libs;
-			sourceTree = "<group>";
-		};
-		08EBB5F41B70C624005F510F /* fftw */ = {
-			isa = PBXGroup;
-			children = (
-				08EBB5F51B70C624005F510F /* .keep */,
-				08EBB5F61B70C624005F510F /* include */,
-				08EBB5F81B70C624005F510F /* lib */,
-			);
-			path = fftw;
-			sourceTree = "<group>";
-		};
-		08EBB5F61B70C624005F510F /* include */ = {
-			isa = PBXGroup;
-			children = (
-				08EBB5F71B70C624005F510F /* fftw3.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		08EBB5F81B70C624005F510F /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				08EBB5F91B70C624005F510F /* .keep */,
-				08EBB5FA1B70C624005F510F /* osx */,
-				08EBB5FC1B70C624005F510F /* win32 */,
-			);
-			path = lib;
-			sourceTree = "<group>";
-		};
-		08EBB5FA1B70C624005F510F /* osx */ = {
-			isa = PBXGroup;
-			children = (
-				08EBB5FB1B70C624005F510F /* fftw3f.a */,
-			);
-			path = osx;
-			sourceTree = "<group>";
-		};
-		08EBB5FC1B70C624005F510F /* win32 */ = {
-			isa = PBXGroup;
-			children = (
-				08EBB5FD1B70C624005F510F /* libfftw3f-3.dll */,
-			);
-			path = win32;
-			sourceTree = "<group>";
-		};
-		08EBB5FE1B70C624005F510F /* kiss */ = {
-			isa = PBXGroup;
-			children = (
-				08EBB5FF1B70C624005F510F /* .keep */,
-				08EBB6001B70C624005F510F /* _kiss_fft_guts.h */,
-				08EBB6011B70C624005F510F /* kiss_fft.c */,
-				08EBB6021B70C624005F510F /* kiss_fft.h */,
-				08EBB6031B70C624005F510F /* kiss_fftr.c */,
-				08EBB6041B70C624005F510F /* kiss_fftr.h */,
-			);
-			path = kiss;
-			sourceTree = "<group>";
-		};
-		08EBB6071B70C624005F510F /* src */ = {
-			isa = PBXGroup;
-			children = (
-				08EBB6081B70C624005F510F /* ofxEasyFft.cpp */,
-				08EBB6091B70C624005F510F /* ofxEasyFft.h */,
-				08EBB60A1B70C624005F510F /* ofxFft.cpp */,
-				08EBB60B1B70C624005F510F /* ofxFft.h */,
-				08EBB60C1B70C624005F510F /* ofxFftBasic.cpp */,
-				08EBB60D1B70C624005F510F /* ofxFftBasic.h */,
-				08EBB60E1B70C624005F510F /* ofxFftw.cpp */,
-				08EBB60F1B70C624005F510F /* ofxFftw.h */,
-				08EBB6101B70C624005F510F /* ofxProcessFFT.cpp */,
-				08EBB6111B70C624005F510F /* ofxProcessFFT.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -1426,7 +1346,7 @@
 		AD642137CCDF61FB3E6CCEA2 /* Addons */ = {
 			isa = PBXGroup;
 			children = (
-				08EBB5F11B70C624005F510F /* ofxFft */,
+				0848D7641B909CCC00672D56 /* ofxFFT */,
 				08DD17411B38AEA10028E472 /* ofxBlur */,
 				1EA3722F0348F85E38E37DFE /* ofxCv */,
 				58C8D76E83509B9D19DA59D2 /* ofxGui */,
@@ -2036,26 +1956,23 @@
 				92816584F3A8BBE485B3E937 /* RunningBackground.cpp in Sources */,
 				6898A5265F3CF322F4741F0A /* Tracker.cpp in Sources */,
 				1508358F4B3C5FEF70848856 /* Utilities.cpp in Sources */,
-				08EBB6191B70C624005F510F /* ofxFftw.cpp in Sources */,
 				381CF14DD1C9AC2B7831FB73 /* Wrappers.cpp in Sources */,
 				F8C291B007AAEA1B9F5F7A9F /* license.md in Sources */,
 				4AD347A6A933136555557495 /* ofxaddons_thumbnail.png in Sources */,
+				0848D7721B909CCC00672D56 /* fft.cpp in Sources */,
 				AD5EFDFC4D6F07508DEA3EC4 /* readme.md in Sources */,
 				C261EB83EE12835059FC057B /* update-projects.py in Sources */,
 				9A15495FA2EE8F23378413B2 /* ofxBaseGui.cpp in Sources */,
 				1E777E277DAB367779E7E89A /* ofxButton.cpp in Sources */,
 				10071661D0AA59C4EC246B6C /* ofxGuiGroup.cpp in Sources */,
-				08EBB6141B70C624005F510F /* kiss_fftr.c in Sources */,
 				4D8AD4DF379BCF35DCB7A000 /* ofxLabel.cpp in Sources */,
 				ACE00783B5CCD633D94EDDEF /* ofxPanel.cpp in Sources */,
 				5367CE7A2C5BCF846D28D246 /* ofxSlider.cpp in Sources */,
 				469ACA6CB6A2A17D8076D840 /* ofxSliderGroup.cpp in Sources */,
 				EF28B4E47642F5ABD48095BA /* ofxToggle.cpp in Sources */,
-				08EBB6171B70C624005F510F /* ofxFft.cpp in Sources */,
 				164749BE807528BDF13DFEDD /* usb-1.0.0-superspeed.a in Sources */,
 				A74B2D0ED3D1FAA9F6969282 /* ofProtonect2.cpp in Sources */,
 				AACAF2AEAEDDAD326595FDD3 /* command_transaction.cpp in Sources */,
-				08EBB61A1B70C624005F510F /* ofxProcessFFT.cpp in Sources */,
 				3188A548FDE21BC89B7D9934 /* depth_packet_processor.cpp in Sources */,
 				B0C015F4E02C1F1F942CFD32 /* depth_packet_stream_parser.cpp in Sources */,
 				E14C0D3CE4949E3DED0CACFD /* double_buffer.cpp in Sources */,
@@ -2080,8 +1997,8 @@
 				A0526808C47B324496EAC52E /* tinythread.cpp in Sources */,
 				CED826669F1BD5159A8FE668 /* transfer_pool.cpp in Sources */,
 				9AD4C5AB3B0D5C7E6BCCD32C /* usb_control.cpp in Sources */,
+				0848D7751B909CCC00672D56 /* ofxFFTLive.cpp in Sources */,
 				2BDF12EAD70172BED505D002 /* README.md in Sources */,
-				08EBB6181B70C624005F510F /* ofxFftBasic.cpp in Sources */,
 				F8AE02F7D7ACC6CBF3C4D338 /* ofxMultiKinectV2.cpp in Sources */,
 				1CA2A7ABA01E9DA2DB7C42A4 /* addon_config.mk in Sources */,
 				40C7BE73A732093DD2B864C6 /* opencv.a in Sources */,
@@ -2117,7 +2034,7 @@
 				7C8C83D744364876A746AA22 /* ofxTurboJpeg.cpp in Sources */,
 				D75E4524BBB94FF34BF7DD48 /* ReleaseNotes in Sources */,
 				82C668F7D0DF704AD7D1BB1C /* utf8cpp.html in Sources */,
-				08EBB6131B70C624005F510F /* kiss_fft.c in Sources */,
+				0848D7741B909CCC00672D56 /* ofxFFTFile.cpp in Sources */,
 				B7993B374B98F50CBD9EC220 /* README.md in Sources */,
 				20DD9BBB631FBC0CDCCFA6B6 /* ofTextConverter.cpp in Sources */,
 				7E78555D595408C86F902937 /* ofUnicode.cpp in Sources */,
@@ -2130,8 +2047,8 @@
 				B46B853B45C1C8AE61E0D258 /* State.cpp in Sources */,
 				0C172F935FC53F927E2A2A06 /* StateMachine.cpp in Sources */,
 				D414552F2B1B64F088EC1909 /* StateManager.cpp in Sources */,
-				08EBB6161B70C624005F510F /* ofxEasyFft.cpp in Sources */,
 				5333265E1B11FF3577F62A0E /* Font.cpp in Sources */,
+				0848D7731B909CCC00672D56 /* ofxFFTBase.cpp in Sources */,
 				3A6C7D72771284673CBE247D /* ImageVisual.cpp in Sources */,
 				F7EA3801298F5E54967C119B /* ImageVisual3D.cpp in Sources */,
 				8BC3D4AABDF5E655706BA3B8 /* SvgVisual.cpp in Sources */,
@@ -2147,7 +2064,6 @@
 				DA22DA3A4F2E611DF50078F2 /* main.cpp in Sources */,
 				A4CC3221B5A44F736FAC6543 /* MurmurContourTrackingApp.cpp in Sources */,
 				58BCEB4034B30CB4A3456FC7 /* SettingsManager.cpp in Sources */,
-				08EBB6151B70C624005F510F /* readme.md in Sources */,
 				C238AF6E2C96220F486FA389 /* TrackingManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

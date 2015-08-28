@@ -141,7 +141,7 @@ void GuiManager::setupAudioGui()
     m_parametersAudio.setName("Audio");
     
     m_audioVolume.set("Volume", 0.5, 0.0, 1.0);
-    m_audioVolume.addListener(audioManager, &AudioManager::onChangeVolumeRange);
+    m_audioVolume.addListener(audioManager, &AudioManager::onChangeVolume);
     m_parametersAudio.add(m_audioVolume);
     
     m_gui.add(m_parametersAudio);
