@@ -97,6 +97,14 @@ public:
     //! Reset Backround for background substraction
     void onResetBackground();
     
+    void onCropLeft( int & pixels) {m_cropLeft = pixels;}
+    
+    void onCropRight( int & pixels) {m_cropRight = pixels;}
+    
+    void onCropTop( int & pixels) {m_cropTop = pixels;}
+    
+    void onCropBottom( int & pixels){m_cropBottom = pixels;}
+    
 public:
     
     static const int DEPTH_CAMERA_WIDTH;
@@ -157,6 +165,8 @@ private:
     int                         m_contourMaxArea;           ///< blcontourob's maxmimum area
     bool                        m_substractBackground;      ///< defines whether to extract or not the background
     bool                        m_sendAllContours;          ///< defines whether to send one or all contours
+    
+    int                         m_cropLeft, m_cropRight, m_cropTop, m_cropBottom;
     
 };
 

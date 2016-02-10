@@ -46,7 +46,7 @@ const int TrackingManager::LEARNING_TIME = 10*30;
 
 TrackingManager::TrackingManager(): Manager(), m_threshold(80), m_contourMinArea(50), m_contourMaxArea(1000), m_thresholdBackground(10), m_substractBackground(true),
 m_depthNearClipping(0.0), m_depthFarClipping(5000.0), m_blurScale(0.0), m_blurRotation(0.0), m_simplifyTolerance(0.0), m_smoothingShape(0.0),m_smoothingSize(0.0),
-m_sendAllContours(false)
+m_sendAllContours(false),m_cropLeft(0), m_cropRight(0), m_cropTop(0), m_cropBottom(0)
 {
     //Intentionally left empty
 }
@@ -134,6 +134,17 @@ void TrackingManager::updateKinectCamera()
             m_depthShader.setUniform1f("farClipping", m_depthFarClipping);
             m_depthTexture.draw(0, 0, DEPTH_CAMERA_WIDTH, DEPTH_CAMERA_HEIGHT);
             m_depthShader.end();
+            
+            ofPushStyle();
+            ofSetColor(0);
+            ofFill();
+            ofRect(0,0,m_cropLeft,DEPTH_CAMERA_HEIGHT);
+            ofRect(0,0,DEPTH_CAMERA_WIDTH,m_cropTop);
+            ofRect(DEPTH_CAMERA_WIDTH-m_cropRight,0, m_cropRight, DEPTH_CAMERA_HEIGHT);
+            ofRect(0,DEPTH_CAMERA_HEIGHT-m_cropBottom,DEPTH_CAMERA_WIDTH,m_cropBottom);
+            ofPopStyle();
+
+            
             m_depthFbo.end();
             
             m_blur.begin();

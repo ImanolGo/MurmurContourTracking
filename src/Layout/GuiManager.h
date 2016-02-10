@@ -116,6 +116,8 @@ private:
     ofParameter<bool>	 m_sendAllContours;
     ofParameter<float>   m_audioVolume;
     
+    ofParameter<int>     m_cropLeft, m_cropRight, m_cropTop, m_cropBottom;
+    
 };
 
 //==========================================================================
