@@ -67,18 +67,19 @@ void TrackingManager::setup()
     
     Manager::setup();
     
-    this->setupKinectCamera();
+    this->setupCamera();
+    this->setupFbos();
     this->setupContourTracking();
 }
 
 void TrackingManager::setupContourTracking()
 {
-    
     m_contourFinder.setMinAreaRadius(m_contourMinArea);
     m_contourFinder.setMaxAreaRadius(m_contourMaxArea);
     m_contourFinder.setTargetColor(ofColor::white, TRACK_COLOR_RGB);
     m_contourFinder.setThreshold(m_threshold);
     m_contourFinder.getTracker().setPersistence(TRACKING_PERSISTANCY);
+    m_contourFinder.setFindHoles(true);
     //m_contourFinder.getTracker().setMaximumDistance(32);
     
     m_background.setLearningTime(LEARNING_TIME);
@@ -86,39 +87,68 @@ void TrackingManager::setupContourTracking()
     m_background.reset();
 }
 
-void TrackingManager::setupKinectCamera()
+void TrackingManager::setupCamera()
 {
-    m_depthShader.setupShaderFromSource(GL_FRAGMENT_SHADER, m_depthFragmentShader);
-    m_depthShader.linkProgram();
-    
+    #ifdef KINECT_CAMERA
+        this->setupKinectCamera();
+    #else
+        this->setupWebCamera();
+    #endif
+}
+
+void TrackingManager::setupFbos()
+{
     m_depthFbo.allocate(DEPTH_CAMERA_WIDTH, DEPTH_CAMERA_HEIGHT, GL_RGB);
     m_depthFbo.begin();
         ofClear(0,0,0,0);
     m_depthFbo.end();
+    
     m_blurredFbo.allocate(DEPTH_CAMERA_WIDTH, DEPTH_CAMERA_HEIGHT, GL_RGB);
     m_blurredFbo.begin();
         ofClear(0,0,0,0);
     m_blurredFbo.end();
     
-    m_kinect.open(true, true, 0, 2);
-    m_kinect.start();
-    
     float radius = 4; float shape = .2; float passes = 1;
     m_blur.setup(DEPTH_CAMERA_WIDTH, DEPTH_CAMERA_HEIGHT, radius, shape, passes);
 
+}
+
+void TrackingManager::setupKinectCamera()
+{
+    m_depthShader.setupShaderFromSource(GL_FRAGMENT_SHADER, m_depthFragmentShader);
+    m_depthShader.linkProgram();
+    
+    m_kinect.open(true, true, 0, 2);
+    m_kinect.start();
+    
     // Note :
     // Default OpenCL device might not be optimal.
     // e.g. Intel HD Graphics will be chosen instead of GeForce.
     // To avoid it, specify OpenCL device index manually like following.
     // m_kinect.open(true, true, 0, 1); // GeForce on MacBookPro Retina
-    
+}
+
+void TrackingManager::setupWebCamera()
+{
+    m_vidGrabber.setDeviceID(0);
+    //m_vidGrabber.setDesiredFrameRate(60);
+    m_vidGrabber.initGrabber(DEPTH_CAMERA_WIDTH, DEPTH_CAMERA_HEIGHT);
 }
 
 
 void TrackingManager::update()
 {
-    this->updateKinectCamera();
+    this->updateCamera();
     this->updateContourTracking();
+}
+
+void TrackingManager::updateCamera()
+{
+    #ifdef KINECT_CAMERA
+        this->updateKinectCamera();
+    #else
+        this->updateWebCamera();
+    #endif
 }
 
 void TrackingManager::updateKinectCamera()
@@ -156,13 +186,48 @@ void TrackingManager::updateKinectCamera()
             m_blurredFbo.end();
         }
     }
+}
+
+
+void TrackingManager::updateWebCamera()
+{
     
-   
+    m_vidGrabber.update();
+    if (m_vidGrabber.isFrameNew()) {
+        m_depthTexture.loadData(m_vidGrabber.getPixelsRef());
+        
+        if (m_depthTexture.isAllocated()) {
+            m_depthFbo.begin();
+            
+                m_depthTexture.draw(0, 0, DEPTH_CAMERA_WIDTH, DEPTH_CAMERA_HEIGHT);
+                
+                ofPushStyle();
+                ofSetColor(0);
+                ofFill();
+                ofRect(0,0,m_cropLeft,DEPTH_CAMERA_HEIGHT);
+                ofRect(0,0,DEPTH_CAMERA_WIDTH,m_cropTop);
+                ofRect(DEPTH_CAMERA_WIDTH-m_cropRight,0, m_cropRight, DEPTH_CAMERA_HEIGHT);
+                ofRect(0,DEPTH_CAMERA_HEIGHT-m_cropBottom,DEPTH_CAMERA_WIDTH,m_cropBottom);
+                ofPopStyle();
+            
+            m_depthFbo.end();
+            
+            m_blur.begin();
+            m_depthFbo.draw(0,0);
+            m_blur.end();
+            
+            m_blurredFbo.begin();
+            m_blur.draw();
+            m_blurredFbo.end();
+        }
+    }
+
+    
 }
 
 void TrackingManager::updateContourTracking()
 {
-    if (m_kinect.isFrameNew())
+    if (m_kinect.isFrameNew() || m_vidGrabber.isFrameNew())
     {
         ofImage image;
         ofPixels pixels;
@@ -235,16 +300,16 @@ void TrackingManager::drawTracking()
     ofPushMatrix();
         ofTranslate( pos.x , pos.y );
         ofScale(SCALE,SCALE);
-        this->drawDepthCamera();
+        this->drawCamera();
         this->drawContourTracking();
     ofPopMatrix();
 }
 
 
-void TrackingManager::drawDepthCamera()
+void TrackingManager::drawCamera()
 {
     ofPushStyle();
-        ofSetColor(255);
+    ofSetColor(255);
         ofRect(0, 0, DEPTH_CAMERA_WIDTH + LayoutManager::PADDING*2, DEPTH_CAMERA_HEIGHT + LayoutManager::PADDING*2);
         m_blurredFbo.draw(LayoutManager::PADDING,LayoutManager::PADDING);
     ofPopStyle();

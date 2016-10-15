@@ -2174,6 +2174,7 @@
 					"-lpthread",
 					"-mtune=native",
 				);
+				OTHER_LIBTOOLFLAGS = "\"../../../addons/ofxFft/lib/fftw/lib/fftw.a\"";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -2274,6 +2275,7 @@
 					"-lpthread",
 					"-mtune=native",
 				);
+				OTHER_LIBTOOLFLAGS = "\"../../../addons/ofxFft/lib/fftw/lib/fftw.a\"";
 				SDKROOT = macosx;
 			};
 			name = Release;

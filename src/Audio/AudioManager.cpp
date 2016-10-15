@@ -29,6 +29,7 @@ void AudioManager::setup()
     
     ofLogNotice() <<"AudioManager::initialized" ;
     
+    ofLogNotice() <<"AudioManager::setupFFT" ;
     this->setupFFT();
 }
 

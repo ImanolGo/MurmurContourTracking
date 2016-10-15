@@ -22,6 +22,7 @@ ofxFFTLive::~ofxFFTLive() {
 
 void ofxFFTLive::setup() {
     ofSoundStream * soundStream = new ofSoundStream();
+    soundStream->listDevices();
     soundStream->setup(this,                   // callback obj.
                        0,                      // out channels.
                        1,                      // in channels.

@@ -14,6 +14,8 @@
 #include "ofxCv.h"
 #include "ofxBlur.h"
 
+#define KINECT_CAMERA //Comment if you are using the laptop camera
+
 
 //========================== class TrackingManager ==============================
 //============================================================================
@@ -112,9 +114,19 @@ public:
    
 private:
     
+    void setupCamera();
+    
     void setupKinectCamera();
     
+    void setupWebCamera();
+    
+    void setupFbos();
+    
     void setupContourTracking();
+    
+    void updateCamera();
+    
+    void updateWebCamera();
     
     void updateKinectCamera();
     
@@ -132,7 +144,7 @@ private:
     
     void drawAllContours();
     
-    void drawDepthCamera();
+    void drawCamera();
     
     void drawContourTracking();
     
@@ -143,6 +155,7 @@ private:
     static const string     m_depthFragmentShader;         ///< Fragment shader handling the depth camera capture
     
     ofxMultiKinectV2        m_kinect;                      ///< Mircrosoft Kinect v2 class
+    ofVideoGrabber          m_vidGrabber;                  ///< Video Grabber
     ofTexture               m_depthTexture;                ///< The texture holding every new depth captured frame
     ofFbo                   m_depthFbo;                    ///< The fbo holding the depth frame after applying shader
     ofFbo                   m_blurredFbo;                  ///< The fbo holding the depth after being blurred
