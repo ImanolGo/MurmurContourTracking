@@ -46,6 +46,8 @@ public:
     
     void onChangeVolume(float& value);
     
+    void onChangeNumPeaks(int& value){m_numPeaks = value;}
+    
 private:
     
     void setupFFT();
@@ -54,6 +56,7 @@ private:
 private:
     
     float           m_volume;
+    int             m_numPeaks;
     ofxFFTLive      m_fft;
     
 };

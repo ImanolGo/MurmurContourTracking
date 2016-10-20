@@ -161,6 +161,10 @@ void GuiManager::setupAudioGui()
     m_audioVolume.addListener(audioManager, &AudioManager::onChangeVolume);
     m_parametersAudio.add(m_audioVolume);
     
+    m_audioNumPeaks.set("FftBins", 5, 0, 20);
+    m_audioNumPeaks.addListener(audioManager, &AudioManager::onChangeNumPeaks);
+    m_parametersAudio.add(m_audioNumPeaks);
+    
     m_gui.add(m_parametersAudio);
 }
 

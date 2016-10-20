@@ -114,7 +114,9 @@ private:
     ofParameter<float>   m_smoothingShape;
     ofParameter<bool>	 m_backgroundSubstraction;
     ofParameter<bool>	 m_sendAllContours;
+    
     ofParameter<float>   m_audioVolume;
+    ofParameter<int>     m_audioNumPeaks;
     
     ofParameter<int>     m_cropLeft, m_cropRight, m_cropTop, m_cropBottom;
     

@@ -11,7 +11,7 @@
 #include "AudioManager.h"
 
 
-AudioManager::AudioManager(): m_volume(0.5)
+AudioManager::AudioManager(): m_volume(0.5), m_numPeaks(5.0)
 {
     //Intentionaly left empty
 }
@@ -66,8 +66,27 @@ void AudioManager::onChangeVolume(float& value)
     m_fft.setVolume(m_volume);
 }
 
-float AudioManager::getMaxSound() 
+float AudioManager::getMaxSound()
 {
-    return ofMap(m_fft.getAveragePeak(), 0.0, 0.6, 0.0, 1.0, true);
+   
+    float avrPeak = 0;
+    vector<float> peakData = m_fft.getFftPeakData();
+    
+    
+    if(peakData.size() <= m_numPeaks){
+        return avrPeak;
+    }
+    
+    for(int i=0; i<= m_numPeaks; i++)
+    {
+         avrPeak+=peakData[i];
+    }
+   
+    
+    avrPeak/=m_numPeaks;
+    
+    //float maxSound = ofMap(m_fft.getAveragePeak(), 0.0, 0.6, 0.0, 1.0, true);
+    float maxSound = ofMap(avrPeak, 0.0, 0.6, 0.0, 1.0, true);
+    return maxSound;
 }
 
