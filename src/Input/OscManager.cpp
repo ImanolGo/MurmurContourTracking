@@ -188,6 +188,27 @@ void OscManager::update()
             float value = m.getArgAsFloat(0);
             AppManager::getInstance().getGuiManager().setGuiSmoothingShape(value);
         }
+        
+        else if(m.getAddress() == "/MurmurContourTracking/CropBottom"){
+            int value = m.getArgAsInt32(0);
+            AppManager::getInstance().getGuiManager().setCropBottom(value);
+        }
+
+        else if(m.getAddress() == "/MurmurContourTracking/CropLeft"){
+            int value = m.getArgAsInt32(0);
+            AppManager::getInstance().getGuiManager().setCropLeft(value);
+        }
+        
+        else if(m.getAddress() == "/MurmurContourTracking/CropRight"){
+            int value = m.getArgAsInt32(0);
+            AppManager::getInstance().getGuiManager().setCropRight(value);
+        }
+        
+        else if(m.getAddress() == "/MurmurContourTracking/CropTop"){
+            int value = m.getArgAsInt32(0);
+            AppManager::getInstance().getGuiManager().setCropTop(value);
+        }
+
     }
 }
 

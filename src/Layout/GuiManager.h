@@ -78,6 +78,14 @@ public:
     
     void setSendAllContours(bool value) {m_sendAllContours = value;}
     
+    void setCropBottom(int value) {m_cropBottom = value;}
+    
+    void setCropLeft(int value) {m_cropLeft = value;}
+    
+    void setCropRight(int value) {m_cropRight = value;}
+    
+    void setCropTop(int value) {m_cropTop = value;}
+    
 private:
     
     void setupCameraGui();
