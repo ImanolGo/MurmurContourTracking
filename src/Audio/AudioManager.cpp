@@ -70,7 +70,8 @@ float AudioManager::getMaxSound()
 {
    
     float avrPeak = 0;
-    vector<float> peakData = m_fft.getFftPeakData();
+    //vector<float> peakData = m_fft.getFftPeakData();
+    vector<float> peakData = m_fft.getFftRawData();
     
     
     if(peakData.size() <= m_numPeaks){
